@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/island-common.iml" filepath="$PROJECT_DIR$/island-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/island-common-api/island-common-api.iml" filepath="$PROJECT_DIR$/island-common-api/island-common-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/island-common-persistence/island-common-persistence.iml" filepath="$PROJECT_DIR$/island-common-persistence/island-common-persistence.iml" />
+      <module fileurl="file://$PROJECT_DIR$/island-common-rpc/island-common-rpc.iml" filepath="$PROJECT_DIR$/island-common-rpc/island-common-rpc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/island-common-service/island-common-service.iml" filepath="$PROJECT_DIR$/island-common-service/island-common-service.iml" />
+    </modules>
+  </component>
+</project>
