@@ -8,8 +8,19 @@
         <version>1.0.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>island-common-persistence</artifactId>
+    <packaging>jar</packaging>
 
+<dependencies>
+    <dependency>
+        <groupId>com.lkyl.oceanFramework</groupId>
+        <artifactId>ocean-mybatis</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <scope>provided</scope>
+    </dependency>
+</dependencies>
 
 </project>
