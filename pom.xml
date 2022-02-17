@@ -9,14 +9,9 @@
     <packaging>pom</packaging>
     <version>1.0.1</version>
 
-    <parent>
-        <groupId>com.lkyl</groupId>
-        <artifactId>oceanFramework</artifactId>
-        <version>1.0.1</version>
-    </parent>
-
     <properties>
         <oceanboot>1.0.1</oceanboot>
+        <java.version>1.8</java.version>
     </properties>
 
     <modules>
@@ -44,7 +39,7 @@
             <plugins>
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.3</version>
+                    <version>3.8.0</version>
                     <configuration>
                         <source>${java.version}</source>
                         <target>${java.version}</target>
