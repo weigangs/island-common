@@ -102,8 +102,6 @@ public class SysLogininforController {
         }
 		SysLogininfor saveEntity = new SysLogininfor();
         BeanUtils.copyProperties(sysLogininforDTO, saveEntity);
-		saveEntity.setCreateTime(new Date());
-		saveEntity.setUpdateTime(new Date());
         if (this.sysLogininforService.save(saveEntity) != 1) {
             throw new CommonException(CommonCode.EXCEPTION, "新增失败!");
         }
@@ -125,7 +123,6 @@ public class SysLogininforController {
         }
 		SysLogininfor updateEntity = new SysLogininfor();
         BeanUtils.copyProperties(sysLogininforDTO, updateEntity);
-		updateEntity.setUpdateTime(new Date());
         if(this.sysLogininforService.updateById(updateEntity) != 1) {
             throw new CommonException(CommonCode.EXCEPTION, "更新失败!");
         }

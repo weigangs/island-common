@@ -102,8 +102,6 @@ public class SysRoleMenuController {
         }
 		SysRoleMenu saveEntity = new SysRoleMenu();
         BeanUtils.copyProperties(sysRoleMenuDTO, saveEntity);
-		saveEntity.setCreateTime(new Date());
-		saveEntity.setUpdateTime(new Date());
         if (this.sysRoleMenuService.save(saveEntity) != 1) {
             throw new CommonException(CommonCode.EXCEPTION, "新增失败!");
         }
@@ -125,7 +123,6 @@ public class SysRoleMenuController {
         }
 		SysRoleMenu updateEntity = new SysRoleMenu();
         BeanUtils.copyProperties(sysRoleMenuDTO, updateEntity);
-		updateEntity.setUpdateTime(new Date());
         if(this.sysRoleMenuService.updateById(updateEntity) != 1) {
             throw new CommonException(CommonCode.EXCEPTION, "更新失败!");
         }

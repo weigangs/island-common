@@ -1,7 +1,6 @@
 package com.lkyl.island.common.ps.entity;
 
 import java.io.Serializable;
-import com.lkyl.oceanframework.mybatis.base.BaseDomain;
 import lombok.Data;
 import lombok.ToString;
 import java.util.Date;

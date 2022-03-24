@@ -102,8 +102,6 @@ public class SysUserRoleController {
         }
 		SysUserRole saveEntity = new SysUserRole();
         BeanUtils.copyProperties(sysUserRoleDTO, saveEntity);
-		saveEntity.setCreateTime(new Date());
-		saveEntity.setUpdateTime(new Date());
         if (this.sysUserRoleService.save(saveEntity) != 1) {
             throw new CommonException(CommonCode.EXCEPTION, "新增失败!");
         }
@@ -125,7 +123,6 @@ public class SysUserRoleController {
         }
 		SysUserRole updateEntity = new SysUserRole();
         BeanUtils.copyProperties(sysUserRoleDTO, updateEntity);
-		updateEntity.setUpdateTime(new Date());
         if(this.sysUserRoleService.updateById(updateEntity) != 1) {
             throw new CommonException(CommonCode.EXCEPTION, "更新失败!");
         }

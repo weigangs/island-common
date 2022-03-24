@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lkyl.island.common.ps.dao.SysRoleDao">
 
-    <resultMap type="com.lkyl.island.common.entity.SysRole" id="SysRoleMap">
+    <resultMap type="com.lkyl.island.common.ps.entity.SysRole" id="SysRoleMap">
         <result property="roleId" column="role_id" jdbcType="INTEGER"/>
         <result property="roleName" column="role_name" jdbcType="VARCHAR"/>
         <result property="roleKey" column="role_key" jdbcType="VARCHAR"/>
