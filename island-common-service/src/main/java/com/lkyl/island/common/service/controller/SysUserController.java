@@ -3,12 +3,13 @@ package com.lkyl.island.common.service.controller;
 import com.lkyl.island.common.ps.entity.SysUser;
 import com.lkyl.island.common.api.request.SysUserDTO;
 import com.lkyl.island.common.ps.service.SysUserService;
-import com.lkyl.oceanframework.web.config.CommonResult;
-import com.lkyl.oceanframework.web.config.PaginatedResult;
-import com.lkyl.oceanframework.web.common.CommonCode;
-import com.lkyl.oceanframework.web.exception.CommonException;
-import com.lkyl.oceanframework.web.constant.PageConstant;
-import com.lkyl.oceanframework.web.util.PageUtil;
+
+import com.lkyl.oceanframework.common.utils.constant.CommonCode;
+import com.lkyl.oceanframework.common.utils.constant.CommonResult;
+import com.lkyl.oceanframework.common.utils.constant.PageConstant;
+import com.lkyl.oceanframework.common.utils.constant.PaginatedResult;
+import com.lkyl.oceanframework.common.utils.exception.CommonException;
+import com.lkyl.oceanframework.common.utils.utils.PageUtil;
 import org.springframework.beans.BeanUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -102,6 +103,7 @@ public class SysUserController {
         }
 		SysUser saveEntity = new SysUser();
         BeanUtils.copyProperties(sysUserDTO, saveEntity);
+        //
 		saveEntity.setCreateTime(new Date());
 		saveEntity.setUpdateTime(new Date());
         if (this.sysUserService.save(saveEntity) != 1) {

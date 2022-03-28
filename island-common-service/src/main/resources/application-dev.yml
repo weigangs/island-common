@@ -11,7 +11,7 @@ spring:
     encoding: UTF-8
   redis:
     database: 0
-    host: 10.5.2.127
+    host: 127.0.0.1
     port: 6379
     #    password: #zjmzxfzhl
     lettuce:
@@ -27,35 +27,43 @@ spring:
       #sentinel:
       #master: mymaster
       #nodes: 168.168.168.101:26379,168.168.168.102:26379,168.168.168.103:26379
-mysql:
-  username: root
-  password: root
-  url: jdbc:mysql://127.0.0.1:3306/ruoyi?serverTimezone=GMT%2B8
+
 mybatis:
   mapperLocations: classpath:mapper/*.xml
 #
-httpclient:
-  #defaultMaxPerRoute默认为2，maxTotal默认为20
-  #连接池的最大连接数
-  maxTotal: 300
-  #每个route默认的最大连接数
-  defaultMaxPerRoute: 100
-  #建立连接超时
-  connectTimeout: 1000000
-  #等待连接超时
-  connectionRequestTimeout: 5000000
-  #从服务器读取超时
-  socketTimeout: 100000000
-  #连接状态验证
-  staleConnectionCheckEnabled: true
-  #validateAfterInactivity 空闲永久连接检查间隔，这个牵扯的还比较多
-  #官方推荐使用这个来检查永久链接的可用性，而不推荐每次请求的时候才去检查
-  validateAfterInactivity: 2000
-  #  keyStorePath: C:/Users/Administrator/Desktop/广州办映射服务器测试证书20181010/dakehu/keystore.jks #证书路径
-#  keyStorePath: /usr/https_cert/keystore.jks #证书路径
-#  keyStorepass: 123456 #证书密码
+ocean:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://127.0.0.1:3306/ruoyi?serverTimezone=GMT%2B8
+    type: druid
+  httpclient:
+    #defaultMaxPerRoute默认为2，maxTotal默认为20
+    #连接池的最大连接数
+    maxTotal: 300
+    #每个route默认的最大连接数
+    defaultMaxPerRoute: 100
+    #建立连接超时
+    connectTimeout: 1000000
+    #等待连接超时
+    connectionRequestTimeout: 5000000
+    #从服务器读取超时
+    socketTimeout: 100000000
+    #连接状态验证
+    staleConnectionCheckEnabled: true
+    #validateAfterInactivity 空闲永久连接检查间隔，这个牵扯的还比较多
+    #官方推荐使用这个来检查永久链接的可用性，而不推荐每次请求的时候才去检查
+    validateAfterInactivity: 2000
+    #  keyStorePath: C:/Users/Administrator/Desktop/广州办映射服务器测试证书20181010/dakehu/keystore.jks #证书路径
+    #  keyStorePath: /usr/https_cert/keystore.jks #证书路径
+    #  keyStorepass: 123456 #证书密码
 
-  alwaysGenerateServicesFile: false
+    alwaysGenerateServicesFile: false
+  security:
+    oauth2:
+      resource:
+        resource-id: island-common-service
+
 
 pagehelper:
   helper-dialect: mysql
