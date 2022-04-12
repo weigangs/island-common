@@ -36,11 +36,11 @@
             <artifactId>island-common-persistence</artifactId>
             <version>1.0.1</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.lkyl</groupId>
             <artifactId>island-common-api</artifactId>
             <version>1.0.1</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>com.lkyl</groupId>
             <artifactId>island-common-rpc</artifactId>

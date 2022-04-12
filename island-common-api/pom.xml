@@ -27,6 +27,11 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.lkyl.oceanFramework</groupId>
+            <artifactId>ocean-web</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

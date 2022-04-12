@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @ToString
 public class SysUser implements Serializable {
-    private static final long serialVersionUID = -63235786712739196L;
+    private static final long serialVersionUID = 841563136911190081L;
     /**
      * 用户ID
      */

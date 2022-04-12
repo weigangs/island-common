@@ -7,7 +7,7 @@ import com.lkyl.oceanframework.mybatis.base.BaseService;
  * 用户信息表(SysUser)表服务接口
  *
  * @author shiwg
- * @since 2022-02-17 15:03:00
+ * @since 2022-04-12 23:08:38
  */
 public interface SysUserService extends BaseService<SysUser, Long>{
 

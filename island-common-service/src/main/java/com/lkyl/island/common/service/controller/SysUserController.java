@@ -3,7 +3,6 @@ package com.lkyl.island.common.service.controller;
 import com.lkyl.island.common.ps.entity.SysUser;
 import com.lkyl.island.common.api.request.SysUserDTO;
 import com.lkyl.island.common.ps.service.SysUserService;
-
 import com.lkyl.oceanframework.common.utils.constant.CommonCode;
 import com.lkyl.oceanframework.common.utils.constant.CommonResult;
 import com.lkyl.oceanframework.common.utils.constant.PageConstant;
@@ -25,7 +24,7 @@ import javax.annotation.Resource;
  * 用户信息表(SysUser)表控制层
  *
  * @author shiwg
- * @since 2022-02-17 15:02:57
+ * @since 2022-04-12 23:08:38
  */
 @Slf4j
 @RestController
@@ -45,7 +44,7 @@ public class SysUserController {
      */
 	    @GetMapping("/getById/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") Long id) {
-        log.info("get SysParam info from token start...");
+        log.info("get SysUser info start...");
         Optional<SysUser> sysUser = this.sysUserService.get(id);
 
         if(null == sysUser){
@@ -103,7 +102,6 @@ public class SysUserController {
         }
 		SysUser saveEntity = new SysUser();
         BeanUtils.copyProperties(sysUserDTO, saveEntity);
-        //
 		saveEntity.setCreateTime(new Date());
 		saveEntity.setUpdateTime(new Date());
         if (this.sysUserService.save(saveEntity) != 1) {

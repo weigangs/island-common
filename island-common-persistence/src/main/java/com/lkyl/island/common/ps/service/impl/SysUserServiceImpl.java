@@ -6,14 +6,13 @@ import com.lkyl.island.common.ps.entity.SysUser;
 import com.lkyl.island.common.ps.dao.SysUserDao;
 import javax.annotation.Resource;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 /**
  * 用户信息表(SysUser)表服务实现类
  *
  * @author shiwg
- * @since 2022-02-17 15:03:00
+ * @since 2022-04-12 23:08:38
  */
 @Service("sysUserService")
 public class SysUserServiceImpl extends BaseServiceImpl<SysUser, Long> implements SysUserService {
@@ -25,5 +24,4 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, Long> implement
         this.sysUserDao = sysUserDao;
         super.setBaseDao(sysUserDao);
     }
-
 }

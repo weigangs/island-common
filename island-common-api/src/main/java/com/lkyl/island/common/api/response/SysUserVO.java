@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel("用户信息表响应体")
 @ToString
 public class SysUserVO implements Serializable {
-    private static final long serialVersionUID = -39189069112342336L;
+    private static final long serialVersionUID = 320037509200810147L;
          @ApiModelProperty("用户ID")
          private Long userId;
          @ApiModelProperty("部门ID")
