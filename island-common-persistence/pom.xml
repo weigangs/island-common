@@ -21,11 +21,6 @@
         <artifactId>lombok</artifactId>
         <scope>provided</scope>
     </dependency>
-
-    <!--<dependency>
-        <groupId>com.lkyl.oceanFramework</groupId>
-        <artifactId>ocean-security</artifactId>
-    </dependency>-->
 </dependencies>
 
 

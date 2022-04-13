@@ -61,8 +61,8 @@ ocean:
     alwaysGenerateServicesFile: false
   security:
     oauth2:
-      resource:
-        resource-id: island-common-service
+      resource-id: frontend
+      token-store-type: inMemory #inMemory 默认使用内存存储，#redis 使用redis存储
 
 
 pagehelper:

@@ -18,8 +18,8 @@ import org.springframework.context.ApplicationContext;
 @EnableOceanHttpClient
 @EnableOceanErrorConfig
 @EnableOceanDataSource
-//@EnableOceanAuthorizationServer
-//@EnableOceanAuthResourceServer
+@EnableOceanAuthorizationServer
+@EnableOceanAuthResourceServer
 public class CommonApplication {
     public static void main(String[] args) {
         ApplicationContext applicationContext = SpringApplication.run(CommonApplication.class, args);
