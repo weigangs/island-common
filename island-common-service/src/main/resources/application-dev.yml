@@ -34,7 +34,7 @@ mybatis:
 ocean:
   datasource:
     username: root
-    password: root
+    password: ENC(qGn7yGLPlYhFenLW3R6bqA==)
     url: jdbc:mysql://127.0.0.1:3306/ruoyi?serverTimezone=GMT%2B8
     type: druid
   httpclient:
@@ -61,8 +61,8 @@ ocean:
     alwaysGenerateServicesFile: false
   security:
     oauth2:
-      resource-id: frontend
-      token-store-type: inMemory #inMemory 默认使用内存存储，#redis 使用redis存储
+      resourceId: frontend
+      tokenStoreType: inMemory #inMemory 默认使用内存存储，#redis 使用redis存储
 
 
 pagehelper:
@@ -70,3 +70,9 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
   params: count=countSql
+#数据库密码加密配置
+jasypt:
+  encryptor:
+    algorithm: PBEWithMD5AndDES
+    password: BdaObXaELXX
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator	#设置初始向量IV生成器的类名

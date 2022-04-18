@@ -9,6 +9,7 @@ import com.lkyl.oceanframework.common.utils.constant.PageConstant;
 import com.lkyl.oceanframework.common.utils.constant.PaginatedResult;
 import com.lkyl.oceanframework.common.utils.exception.CommonException;
 import com.lkyl.oceanframework.common.utils.utils.PageUtil;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.springframework.beans.BeanUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -151,6 +152,12 @@ public class SysUserRoleController {
         .setMsg("删除成功"));
     }
 
+    public static void main(String []args){
+        StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
+        encryptor.setAlgorithm("PBEWITHHMACSHA512ANDAES_256");
+        encryptor.setPassword("BdaObXaELXX");
+        System.out.println(encryptor.encrypt("root"));
+    }
 
 }
 
