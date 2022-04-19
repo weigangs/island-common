@@ -37,6 +37,7 @@ ocean:
     password: ENC(qGn7yGLPlYhFenLW3R6bqA==)
     url: jdbc:mysql://127.0.0.1:3306/ruoyi?serverTimezone=GMT%2B8
     type: druid
+    testOnBorrow: true
   httpclient:
     #defaultMaxPerRoute默认为2，maxTotal默认为20
     #连接池的最大连接数
