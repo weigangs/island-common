@@ -1,7 +1,6 @@
 #!/bin/bash
 BASE_DIR=`cd $(dirname $0);pwd -P`
 JAR_NAME=island-common-service-1.0.1.jar
-APP_NAME=${BASE_DIR}/${JAR_NAME}
 LOG_HOME=${BASE_DIR}/logs
 SERVER_NAME=`cat $CONF_DIR/application.yml | grep -w "name:" | grep -v "#" | awk  'NR==1{print $2}' | tr -d '\r'`
 source /etc/profile

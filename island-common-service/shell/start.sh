@@ -1,7 +1,7 @@
 #!/bin/bash
 BASE_DIR=`cd $(dirname $0);pwd -P`
 JAR_NAME=island-common-service-1.0.1.jar
-APP_NAME=${BASE_DIR}/${JAR_NAME}
+APP_NAME=${BASE_DIR}/lib/${JAR_NAME}
 LOG_HOME=${BASE_DIR}/logs
 CONF_DIR=${BASE_DIR}/conf
 JVM_OPTS=`cat $CONF_DIR/application.yml | grep -w "jvm_opts:" | grep -v "#" | awk  'NR==1{print $2}' | tr -d '\r'`

@@ -9,9 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
 @Slf4j
+@OceanOauth2Server
 @EnableOceanWeb
 @EnableOceanMybatis
-@OceanOauth2Server
 @SpringBootApplication
 public class CommonApplication {
     public static void main(String[] args) {

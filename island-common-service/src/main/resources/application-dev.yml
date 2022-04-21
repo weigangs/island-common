@@ -27,7 +27,8 @@ spring:
       #sentinel:
       #master: mymaster
       #nodes: 168.168.168.101:26379,168.168.168.102:26379,168.168.168.103:26379
-
+#  swagger:
+#    authServerAddress: localhost:${server.port}/oauth/token
 mybatis:
   mapperLocations: classpath:mapper/*.xml
 #
