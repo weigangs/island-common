@@ -2,6 +2,7 @@
 
 #### 介绍
 公共服务应用，公共客户信息，及系统菜单
+an oceanFramework example service
 
 #### 软件架构
 软件架构说明
