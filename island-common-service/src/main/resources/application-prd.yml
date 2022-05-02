@@ -34,9 +34,9 @@ mybatis:
 #
 ocean:
   datasource:
-    username: root
-    password: ENC(qGn7yGLPlYhFenLW3R6bqA==)
-    url: jdbc:mysql://127.0.0.1:3306/ruoyi?serverTimezone=GMT%2B8
+    username: island_common
+    password: ENC(FpuzvMx+kFcIvISnUasU0xWrmTQ2Gtt9L8CCWtibNL0=)
+    url: ENC(4AwURf2bU+MJ5RfZyqAUzW4eYTSOuGDLRu5GB+EaWHBw0gfyem135o13R/cdciiOea6Je8cxj77R5XPOyQlwOwPM4Folop+j9q86NrssenQ=)
     type: druid
     testOnBorrow: true
   httpclient:
@@ -78,5 +78,4 @@ jasypt:
     algorithm: PBEWithMD5AndDES
     password: BdaObXaELXX
     iv-generator-classname: org.jasypt.iv.NoIvGenerator	#设置初始向量IV生成器的类名
-
 jvm_opts: -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=128m -Xms128m -Xmx128m -Xmn64m -Xss256k -XX:SurvivorRatio=8 -XX:+UseConcMarkSweepGC

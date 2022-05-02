@@ -19,7 +19,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.lkyl.oceanFramework</groupId>
+            <groupId>com.lkyl.oceanframework</groupId>
             <artifactId>ocean-web</artifactId>
         </dependency>
     </dependencies>

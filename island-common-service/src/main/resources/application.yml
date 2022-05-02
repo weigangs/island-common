@@ -17,6 +17,4 @@ spring:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
 
-jvm_opts: -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=128m -Xms128m -Xmx128m -Xmn64m -Xss256k -XX:SurvivorRatio=8 -XX:+UseConcMarkSweepGC
-
 

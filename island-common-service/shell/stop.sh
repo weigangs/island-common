@@ -2,6 +2,7 @@
 BASE_DIR=`cd $(dirname $0);pwd -P`
 JAR_NAME=island-common-service-1.0.1.jar
 LOG_HOME=${BASE_DIR}/logs
+CONF_DIR=${BASE_DIR}/conf
 SERVER_NAME=`cat $CONF_DIR/application.yml | grep -w "name:" | grep -v "#" | awk  'NR==1{print $2}' | tr -d '\r'`
 source /etc/profile
 
@@ -11,7 +12,7 @@ fi
 
 
 is_Running(){
-    PIDS=`ps -ef |grep "$JAR_NAME" |awk '{print $2}'`
+    PIDS=`ps -ef|grep -w $JAR_NAME|grep -v grep|awk '{print $2}' `
     if [ -z "${pid}" ]; then
     return 1
     else
@@ -28,9 +29,9 @@ stop(){
         kill $PID > /dev/null 2>&1
     done
 
-    echo "$SERVER_NAME server stopped! PID: $PIDS"
+    echo -e "\n$SERVER_NAME server stopped! PID: $PIDS"
     else
-    echo "${SERVER_NAME} is not running"
+    echo -e "\n${SERVER_NAME} is not running"
     fi
 }
 

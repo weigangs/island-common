@@ -7,11 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
 @Slf4j
 @OceanOauth2Server
-@EnableOceanWeb
 @EnableOceanMybatis
+@EnableOceanWeb
 @SpringBootApplication
 public class CommonApplication {
     public static void main(String[] args) {
