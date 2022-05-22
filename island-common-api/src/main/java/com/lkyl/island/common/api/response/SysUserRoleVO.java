@@ -11,11 +11,13 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel("用户和角色关联表响应体")
 @ToString
 public class SysUserRoleVO implements Serializable {
-    private static final long serialVersionUID = -53847991478167287L;
+    private static final long serialVersionUID = -76975571487835824L;
          @ApiModelProperty("用户ID")
          private Long userId;
          @ApiModelProperty("角色ID")
          private Long roleId;
+         @ApiModelProperty("租户")
+         private String tenantId;
 
 
 }

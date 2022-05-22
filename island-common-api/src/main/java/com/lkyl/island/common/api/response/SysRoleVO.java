@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel("角色信息表响应体")
 @ToString
 public class SysRoleVO implements Serializable {
-    private static final long serialVersionUID = 295075979424814209L;
+    private static final long serialVersionUID = 921661089957309684L;
          @ApiModelProperty("角色ID")
          private Long roleId;
          @ApiModelProperty("角色名称")
@@ -28,18 +28,20 @@ public class SysRoleVO implements Serializable {
          private Integer deptCheckStrictly;
          @ApiModelProperty("角色状态（0正常 1停用）")
          private String status;
-         @ApiModelProperty("删除标志（0代表存在 2代表删除）")
+         @ApiModelProperty("删除标识")
          private String delFlag;
-         @ApiModelProperty("创建者")
-         private String createBy;
          @ApiModelProperty("创建时间")
          private Date createTime;
-         @ApiModelProperty("更新者")
-         private String updateBy;
          @ApiModelProperty("更新时间")
          private Date updateTime;
+         @ApiModelProperty("租户")
+         private String tenantId;
          @ApiModelProperty("备注")
          private String remark;
+         @ApiModelProperty("创建者")
+         private String createUser;
+         @ApiModelProperty("更新者")
+         private String updateUser;
 
 
 }

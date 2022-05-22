@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lkyl.island.common.ps.dao.SysRoleDeptDao">
+
+    <resultMap type="com.lkyl.island.common.ps.entity.SysRoleDept" id="SysRoleDeptMap">
+        <result property="roleId" column="role_id" jdbcType="INTEGER"/>
+        <result property="deptId" column="dept_id" jdbcType="INTEGER"/>
+        <result property="tenantId" column="tenant_id" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="get" resultMap="SysRoleDeptMap">
+        select
+          role_id, dept_id, tenant_id
+        from sys_role_dept
+        where role_id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="getByParam" resultMap="SysRoleDeptMap">
+        select
+          role_id, dept_id, tenant_id
+        from sys_role_dept
+        <where>
+            <if test="roleId != null">
+                and role_id = #{roleId}
+            </if>
+            <if test="deptId != null">
+                and dept_id = #{deptId}
+            </if>
+            <if test="tenantId != null and tenantId != ''">
+                and tenant_id = #{tenantId}
+            </if>
+        </where>
+    </select>
+
+	    <!--根据主键ID list 查询-->
+    <select id="queryByIdList" parameterType="java.util.Map" resultMap="SysRoleDeptMap">
+        select
+          role_id, dept_id, tenant_id
+        from sys_role_dept
+        <where>
+		<if test="idList != null and idList.size() > 0">
+			and role_id in
+			<foreach item="id" collection="idList" open="(" separator="," close=")">
+				#{id}
+			</foreach>
+        </if>
+            <if test="roleId != null">
+                and role_id = #{roleId}
+            </if>
+            <if test="deptId != null">
+                and dept_id = #{deptId}
+            </if>
+            <if test="tenantId != null and tenantId != ''">
+                and tenant_id = #{tenantId}
+            </if>
+        </where>
+    </select>
+
+	    <!--查询列表据-->
+    <select id="list" resultMap="SysRoleDeptMap">
+        select
+          role_id, dept_id, tenant_id
+        from sys_role_dept
+        <where>
+            <if test="roleId != null">
+                and role_id = #{roleId}
+            </if>
+            <if test="deptId != null">
+                and dept_id = #{deptId}
+            </if>
+            <if test="tenantId != null and tenantId != ''">
+                and tenant_id = #{tenantId}
+            </if>
+        </where>
+    </select>
+
+    <!--统计总行数-->
+    <select id="count" resultType="int">
+        select count(1)
+        from sys_role_dept
+        <where>
+            <if test="roleId != null">
+                and role_id = #{roleId}
+            </if>
+            <if test="deptId != null">
+                and dept_id = #{deptId}
+            </if>
+            <if test="tenantId != null and tenantId != ''">
+                and tenant_id = #{tenantId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="save" >
+        insert into sys_role_dept(role_id, dept_id, tenant_id)
+        values (#{roleId}, #{deptId}, #{tenantId})
+    </insert>
+
+    <insert id="batchSave">
+        insert into sys_role_dept(role_id, dept_id, tenant_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+        (#{entity.roleId}, #{entity.deptId}, #{entity.tenantId})
+        </foreach>
+    </insert>
+
+    <insert id="saveOrUpdateBatch">
+        insert into sys_role_dept(role_id, dept_id, tenant_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.roleId}, #{entity.deptId}, #{entity.tenantId})
+        </foreach>
+        on duplicate key update
+        role_id = values(role_id),
+        dept_id = values(dept_id),
+        tenant_id = values(tenant_id)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="updateById">
+        update sys_role_dept
+        <set>
+            <if test="tenantId != null and tenantId != ''">
+                tenant_id = #{tenantId},
+            </if>
+        </set>
+        where role_id = #{roleId}
+    </update>
+
+    <!--通过主键修改数据-->
+    <update id="updateOnWhere">
+        update sys_role_dept
+        <set>
+            <if test="tenantId != null and tenantId != ''">
+                tenant_id = #{tenantId},
+            </if>
+        </set>
+                <where>
+            <if test="roleId != null">
+                and role_id = #{roleId}
+            </if>
+            <if test="deptId != null">
+                and dept_id = #{deptId}
+            </if>
+            <if test="tenantId != null and tenantId != ''">
+                and tenant_id = #{tenantId}
+            </if>
+        </where>
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="remove">
+        delete from sys_role_dept where role_id = #{roleId}
+    </delete>
+
+	<!--通过where删除-->
+    <delete id="removeOnWhere">
+        delete from sys_role_dept
+		                <where>
+            <if test="roleId != null">
+                and role_id = #{roleId}
+            </if>
+            <if test="deptId != null">
+                and dept_id = #{deptId}
+            </if>
+            <if test="tenantId != null and tenantId != ''">
+                and tenant_id = #{tenantId}
+            </if>
+        </where>
+    </delete>
+	<!-- 通过ID批量删除 -->
+	    <delete id="batchRemoveById">
+        DELETE FROM sys_role_dept
+        where role_id in
+		        <foreach item="id" collection="array" open="(" separator="," close=")">
+#{id}        </foreach>
+    </delete>
+
+</mapper>
+

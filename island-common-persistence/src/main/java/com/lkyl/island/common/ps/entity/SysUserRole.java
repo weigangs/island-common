@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @ToString
 public class SysUserRole implements Serializable {
-    private static final long serialVersionUID = 357292533912418521L;
+    private static final long serialVersionUID = 318704920655424311L;
     /**
      * 用户ID
      */
@@ -18,6 +18,10 @@ public class SysUserRole implements Serializable {
      * 角色ID
      */
     private Long roleId;
+    /**
+     * 租户
+     */
+    private String tenantId;
 
 
 }

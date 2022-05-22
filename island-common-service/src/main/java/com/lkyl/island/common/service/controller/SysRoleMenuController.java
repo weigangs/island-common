@@ -2,13 +2,14 @@ package com.lkyl.island.common.service.controller;
 
 import com.lkyl.island.common.ps.entity.SysRoleMenu;
 import com.lkyl.island.common.api.request.SysRoleMenuDTO;
-import com.lkyl.island.common.ps.service.SysRoleMenuService;
+import com.lkyl.island.common.service.service.SysRoleMenuService;
+import com.lkyl.island.common.service.converter.SysRoleMenuConverter;
 import com.lkyl.oceanframework.common.utils.constant.CommonCode;
-import com.lkyl.oceanframework.common.utils.constant.CommonResult;
 import com.lkyl.oceanframework.common.utils.constant.PageConstant;
-import com.lkyl.oceanframework.common.utils.constant.PaginatedResult;
 import com.lkyl.oceanframework.common.utils.exception.CommonException;
+import com.lkyl.oceanframework.web.util.CommonResultUtil;
 import com.lkyl.oceanframework.common.utils.utils.PageUtil;
+import com.lkyl.oceanframework.common.utils.utils.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -23,8 +24,8 @@ import javax.annotation.Resource;
 /**
  * 角色和菜单关联表(SysRoleMenu)表控制层
  *
- * @author shiwg
- * @since 2022-02-17 15:05:19
+ * @author author
+ * @since 2022-05-21 18:11:52
  */
 @Slf4j
 @RestController
@@ -32,32 +33,29 @@ import javax.annotation.Resource;
 public class SysRoleMenuController {
     /**
      * 服务对象
-     */
+    */
     @Resource
     private SysRoleMenuService sysRoleMenuService;
 
-	    /**
+	/**
      * 根据主键ID查询
      *
      * @param id
      * @return 查询结果
-     */
-	    @GetMapping("/getById/{id}")
+    */
+	@GetMapping("/getById/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") Long id) {
-        log.info("get SysParam info from token start...");
+        log.info("get SysRoleMenu info start...");
         Optional<SysRoleMenu> sysRoleMenu = this.sysRoleMenuService.get(id);
 
         if(null == sysRoleMenu){
             throw new CommonException(CommonCode.EXCEPTION, "返回对象为NULL!");
         }
-        return ResponseEntity.ok(new CommonResult().
-        setCode(CommonCode.SUCCESS).
-        setMsg("获取成功").
-        setData(sysRoleMenu));
+
+        return CommonResultUtil.success("获取成功", sysRoleMenu);
     }
 
-
-	    /**
+	/**
      * 分页查询
      *
      * @param sysRoleMenuDTO 筛选条件
@@ -76,21 +74,19 @@ public class SysRoleMenuController {
         PageHelper.startPage(page, perPage);
 		//PageHelper.startPage(page, perPage, "update_time desc");
 		SysRoleMenu queryEntity = new SysRoleMenu();
+
         BeanUtils.copyProperties(sysRoleMenuDTO, queryEntity);
         List<SysRoleMenu> sysRoleMenuList = this.sysRoleMenuService.list(queryEntity);
-        PageInfo<SysRoleMenu> pageInfo = new PageInfo<>(sysRoleMenuList);
-        return ResponseEntity.ok(new PaginatedResult()
-                .setCode(CommonCode.SUCCESS)
-                .setMsg("查询成功")
-                .setData(pageInfo.getList())
-                .setCurrentPage(pageInfo.getPageNum())
-                .setTotalPage(pageInfo.getPages())
-                .setTotalCount(pageInfo.getTotal()));
+		PageInfo pageInfo = new PageInfo<>(sysRoleMenuList);
 
+		if(CollectionUtils.isNotEmpty(pageInfo.getList())) {
+            pageInfo.setList(SysRoleMenuConverter.INSTANCE.to(pageInfo.getList()));
+        }
+
+        return CommonResultUtil.pagingSuccess("查询成功", pageInfo);
     }
 
-
-	    /**
+	/**
      * 新增
      * @param sysRoleMenuDTO
      * @return
@@ -101,17 +97,16 @@ public class SysRoleMenuController {
             log.info("save SysRoleMenu start...");
         }
 		SysRoleMenu saveEntity = new SysRoleMenu();
+
         BeanUtils.copyProperties(sysRoleMenuDTO, saveEntity);
         if (this.sysRoleMenuService.save(saveEntity) != 1) {
             throw new CommonException(CommonCode.EXCEPTION, "新增失败!");
         }
-        return ResponseEntity.ok(new CommonResult()
-                .setCode(CommonCode.SUCCESS)
-                .setMsg("新增成功")
-                .setData(saveEntity));
+
+        return CommonResultUtil.success("新增成功", saveEntity);
     }
 
-	    /**
+	/**
      * 修改
      * @param sysRoleMenuDTO
      * @return
@@ -122,17 +117,16 @@ public class SysRoleMenuController {
             log.info("update SysRoleMenu start....");
         }
 		SysRoleMenu updateEntity = new SysRoleMenu();
+
         BeanUtils.copyProperties(sysRoleMenuDTO, updateEntity);
         if(this.sysRoleMenuService.updateById(updateEntity) != 1) {
             throw new CommonException(CommonCode.EXCEPTION, "更新失败!");
         }
-        return ResponseEntity.ok(new CommonResult()
-                .setCode(CommonCode.SUCCESS)
-                .setMsg("更新成功")
-                .setData(updateEntity));
+
+        return CommonResultUtil.success("更新成功", updateEntity);
     }
 
-	 /**
+	/**
      * 根据ID删除
      *
      * @param id
@@ -146,11 +140,7 @@ public class SysRoleMenuController {
         if (this.sysRoleMenuService.remove(id) != 1) {
             throw new CommonException(CommonCode.EXCEPTION, "删除失败!");
         }
-        return ResponseEntity.ok(new CommonResult()
-        .setCode(CommonCode.SUCCESS)
-        .setMsg("删除成功"));
+
+        return CommonResultUtil.success("删除成功");
     }
-
-
 }
-

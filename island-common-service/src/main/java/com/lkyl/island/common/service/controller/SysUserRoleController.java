@@ -2,14 +2,14 @@ package com.lkyl.island.common.service.controller;
 
 import com.lkyl.island.common.ps.entity.SysUserRole;
 import com.lkyl.island.common.api.request.SysUserRoleDTO;
-import com.lkyl.island.common.ps.service.SysUserRoleService;
+import com.lkyl.island.common.service.service.SysUserRoleService;
+import com.lkyl.island.common.service.converter.SysUserRoleConverter;
 import com.lkyl.oceanframework.common.utils.constant.CommonCode;
-import com.lkyl.oceanframework.common.utils.constant.CommonResult;
 import com.lkyl.oceanframework.common.utils.constant.PageConstant;
-import com.lkyl.oceanframework.common.utils.constant.PaginatedResult;
 import com.lkyl.oceanframework.common.utils.exception.CommonException;
+import com.lkyl.oceanframework.web.util.CommonResultUtil;
 import com.lkyl.oceanframework.common.utils.utils.PageUtil;
-import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
+import com.lkyl.oceanframework.common.utils.utils.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -24,8 +24,8 @@ import javax.annotation.Resource;
 /**
  * 用户和角色关联表(SysUserRole)表控制层
  *
- * @author shiwg
- * @since 2022-02-17 15:05:49
+ * @author author
+ * @since 2022-05-21 18:11:52
  */
 @Slf4j
 @RestController
@@ -33,32 +33,29 @@ import javax.annotation.Resource;
 public class SysUserRoleController {
     /**
      * 服务对象
-     */
+    */
     @Resource
     private SysUserRoleService sysUserRoleService;
 
-	    /**
+	/**
      * 根据主键ID查询
      *
      * @param id
      * @return 查询结果
-     */
-	    @GetMapping("/getById/{id}")
+    */
+	@GetMapping("/getById/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") Long id) {
-        log.info("get SysParam info from token start...");
+        log.info("get SysUserRole info start...");
         Optional<SysUserRole> sysUserRole = this.sysUserRoleService.get(id);
 
         if(null == sysUserRole){
             throw new CommonException(CommonCode.EXCEPTION, "返回对象为NULL!");
         }
-        return ResponseEntity.ok(new CommonResult().
-        setCode(CommonCode.SUCCESS).
-        setMsg("获取成功").
-        setData(sysUserRole));
+
+        return CommonResultUtil.success("获取成功", sysUserRole);
     }
 
-
-	    /**
+	/**
      * 分页查询
      *
      * @param sysUserRoleDTO 筛选条件
@@ -77,21 +74,19 @@ public class SysUserRoleController {
         PageHelper.startPage(page, perPage);
 		//PageHelper.startPage(page, perPage, "update_time desc");
 		SysUserRole queryEntity = new SysUserRole();
+
         BeanUtils.copyProperties(sysUserRoleDTO, queryEntity);
         List<SysUserRole> sysUserRoleList = this.sysUserRoleService.list(queryEntity);
-        PageInfo<SysUserRole> pageInfo = new PageInfo<>(sysUserRoleList);
-        return ResponseEntity.ok(new PaginatedResult()
-                .setCode(CommonCode.SUCCESS)
-                .setMsg("查询成功")
-                .setData(pageInfo.getList())
-                .setCurrentPage(pageInfo.getPageNum())
-                .setTotalPage(pageInfo.getPages())
-                .setTotalCount(pageInfo.getTotal()));
+		PageInfo pageInfo = new PageInfo<>(sysUserRoleList);
 
+		if(CollectionUtils.isNotEmpty(pageInfo.getList())) {
+            pageInfo.setList(SysUserRoleConverter.INSTANCE.to(pageInfo.getList()));
+        }
+
+        return CommonResultUtil.pagingSuccess("查询成功", pageInfo);
     }
 
-
-	    /**
+	/**
      * 新增
      * @param sysUserRoleDTO
      * @return
@@ -102,17 +97,16 @@ public class SysUserRoleController {
             log.info("save SysUserRole start...");
         }
 		SysUserRole saveEntity = new SysUserRole();
+
         BeanUtils.copyProperties(sysUserRoleDTO, saveEntity);
         if (this.sysUserRoleService.save(saveEntity) != 1) {
             throw new CommonException(CommonCode.EXCEPTION, "新增失败!");
         }
-        return ResponseEntity.ok(new CommonResult()
-                .setCode(CommonCode.SUCCESS)
-                .setMsg("新增成功")
-                .setData(saveEntity));
+
+        return CommonResultUtil.success("新增成功", saveEntity);
     }
 
-	    /**
+	/**
      * 修改
      * @param sysUserRoleDTO
      * @return
@@ -123,17 +117,16 @@ public class SysUserRoleController {
             log.info("update SysUserRole start....");
         }
 		SysUserRole updateEntity = new SysUserRole();
+
         BeanUtils.copyProperties(sysUserRoleDTO, updateEntity);
         if(this.sysUserRoleService.updateById(updateEntity) != 1) {
             throw new CommonException(CommonCode.EXCEPTION, "更新失败!");
         }
-        return ResponseEntity.ok(new CommonResult()
-                .setCode(CommonCode.SUCCESS)
-                .setMsg("更新成功")
-                .setData(updateEntity));
+
+        return CommonResultUtil.success("更新成功", updateEntity);
     }
 
-	 /**
+	/**
      * 根据ID删除
      *
      * @param id
@@ -147,17 +140,7 @@ public class SysUserRoleController {
         if (this.sysUserRoleService.remove(id) != 1) {
             throw new CommonException(CommonCode.EXCEPTION, "删除失败!");
         }
-        return ResponseEntity.ok(new CommonResult()
-        .setCode(CommonCode.SUCCESS)
-        .setMsg("删除成功"));
-    }
 
-    public static void main(String []args){
-        StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
-        encryptor.setAlgorithm("PBEWITHHMACSHA512ANDAES_256");
-        encryptor.setPassword("BdaObXaELXX");
-        System.out.println(encryptor.encrypt("root"));
+        return CommonResultUtil.success("删除成功");
     }
-
 }
-

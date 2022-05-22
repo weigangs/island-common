@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @ToString
 public class SysUser implements Serializable {
-    private static final long serialVersionUID = 841563136911190081L;
+    private static final long serialVersionUID = -25184325061042310L;
     /**
      * 用户ID
      */
@@ -55,7 +55,7 @@ public class SysUser implements Serializable {
      */
     private String status;
     /**
-     * 删除标志（0代表存在 2代表删除）
+     * 删除标识
      */
     private String delFlag;
     /**
@@ -67,17 +67,9 @@ public class SysUser implements Serializable {
      */
     private Date loginDate;
     /**
-     * 创建者
-     */
-    private String createBy;
-    /**
      * 创建时间
      */
     private Date createTime;
-    /**
-     * 更新者
-     */
-    private String updateBy;
     /**
      * 更新时间
      */
@@ -86,6 +78,18 @@ public class SysUser implements Serializable {
      * 备注
      */
     private String remark;
+    /**
+     * 租户
+     */
+    private String tenantId;
+    /**
+     * 创建者
+     */
+    private String createUser;
+    /**
+     * 更新者
+     */
+    private String updateUser;
 
 
 }

@@ -12,17 +12,18 @@
         <result property="deptCheckStrictly" column="dept_check_strictly" jdbcType="INTEGER"/>
         <result property="status" column="status" jdbcType="VARCHAR"/>
         <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
-        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-        <result property="updateBy" column="update_by" jdbcType="VARCHAR"/>
         <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="tenantId" column="tenant_id" jdbcType="VARCHAR"/>
         <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="get" resultMap="SysRoleMap">
         select
-          role_id, role_name, role_key, role_sort, data_scope, menu_check_strictly, dept_check_strictly, status, del_flag, create_by, create_time, update_by, update_time, remark
+          role_id, role_name, role_key, role_sort, data_scope, menu_check_strictly, dept_check_strictly, status, del_flag, create_time, update_time, tenant_id, remark, create_user, update_user
         from sys_role
         where role_id = #{id}
     </select>
@@ -30,7 +31,7 @@
     <!--查询指定行数据-->
     <select id="getByParam" resultMap="SysRoleMap">
         select
-          role_id, role_name, role_key, role_sort, data_scope, menu_check_strictly, dept_check_strictly, status, del_flag, create_by, create_time, update_by, update_time, remark
+          role_id, role_name, role_key, role_sort, data_scope, menu_check_strictly, dept_check_strictly, status, del_flag, create_time, update_time, tenant_id, remark, create_user, update_user
         from sys_role
         <where>
             <if test="roleId != null">
@@ -60,20 +61,83 @@
             <if test="delFlag != null and delFlag != ''">
                 and del_flag = #{delFlag}
             </if>
-            <if test="createBy != null and createBy != ''">
-                and create_by = #{createBy}
-            </if>
             <if test="createTime != null">
                 and create_time = #{createTime}
-            </if>
-            <if test="updateBy != null and updateBy != ''">
-                and update_by = #{updateBy}
             </if>
             <if test="updateTime != null">
                 and update_time = #{updateTime}
             </if>
+            <if test="tenantId != null and tenantId != ''">
+                and tenant_id = #{tenantId}
+            </if>
             <if test="remark != null and remark != ''">
                 and remark = #{remark}
+            </if>
+            <if test="createUser != null and createUser != ''">
+                and create_user = #{createUser}
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                and update_user = #{updateUser}
+            </if>
+        </where>
+    </select>
+
+	    <!--根据主键ID list 查询-->
+    <select id="queryByIdList" parameterType="java.util.Map" resultMap="SysRoleMap">
+        select
+          role_id, role_name, role_key, role_sort, data_scope, menu_check_strictly, dept_check_strictly, status, del_flag, create_time, update_time, tenant_id, remark, create_user, update_user
+        from sys_role
+        <where>
+		<if test="idList != null and idList.size() > 0">
+			and role_id in
+			<foreach item="id" collection="idList" open="(" separator="," close=")">
+				#{id}
+			</foreach>
+        </if>
+            <if test="roleId != null">
+                and role_id = #{roleId}
+            </if>
+            <if test="roleName != null and roleName != ''">
+                and role_name = #{roleName}
+            </if>
+            <if test="roleKey != null and roleKey != ''">
+                and role_key = #{roleKey}
+            </if>
+            <if test="roleSort != null">
+                and role_sort = #{roleSort}
+            </if>
+            <if test="dataScope != null and dataScope != ''">
+                and data_scope = #{dataScope}
+            </if>
+            <if test="menuCheckStrictly != null">
+                and menu_check_strictly = #{menuCheckStrictly}
+            </if>
+            <if test="deptCheckStrictly != null">
+                and dept_check_strictly = #{deptCheckStrictly}
+            </if>
+            <if test="status != null and status != ''">
+                and status = #{status}
+            </if>
+            <if test="delFlag != null and delFlag != ''">
+                and del_flag = #{delFlag}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="tenantId != null and tenantId != ''">
+                and tenant_id = #{tenantId}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark = #{remark}
+            </if>
+            <if test="createUser != null and createUser != ''">
+                and create_user = #{createUser}
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                and update_user = #{updateUser}
             </if>
         </where>
     </select>
@@ -81,7 +145,7 @@
 	    <!--查询列表据-->
     <select id="list" resultMap="SysRoleMap">
         select
-          role_id, role_name, role_key, role_sort, data_scope, menu_check_strictly, dept_check_strictly, status, del_flag, create_by, create_time, update_by, update_time, remark
+          role_id, role_name, role_key, role_sort, data_scope, menu_check_strictly, dept_check_strictly, status, del_flag, create_time, update_time, tenant_id, remark, create_user, update_user
         from sys_role
         <where>
             <if test="roleId != null">
@@ -111,20 +175,23 @@
             <if test="delFlag != null and delFlag != ''">
                 and del_flag = #{delFlag}
             </if>
-            <if test="createBy != null and createBy != ''">
-                and create_by = #{createBy}
-            </if>
             <if test="createTime != null">
                 and create_time = #{createTime}
-            </if>
-            <if test="updateBy != null and updateBy != ''">
-                and update_by = #{updateBy}
             </if>
             <if test="updateTime != null">
                 and update_time = #{updateTime}
             </if>
+            <if test="tenantId != null and tenantId != ''">
+                and tenant_id = #{tenantId}
+            </if>
             <if test="remark != null and remark != ''">
                 and remark = #{remark}
+            </if>
+            <if test="createUser != null and createUser != ''">
+                and create_user = #{createUser}
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                and update_user = #{updateUser}
             </if>
         </where>
     </select>
@@ -161,43 +228,46 @@
             <if test="delFlag != null and delFlag != ''">
                 and del_flag = #{delFlag}
             </if>
-            <if test="createBy != null and createBy != ''">
-                and create_by = #{createBy}
-            </if>
             <if test="createTime != null">
                 and create_time = #{createTime}
-            </if>
-            <if test="updateBy != null and updateBy != ''">
-                and update_by = #{updateBy}
             </if>
             <if test="updateTime != null">
                 and update_time = #{updateTime}
             </if>
+            <if test="tenantId != null and tenantId != ''">
+                and tenant_id = #{tenantId}
+            </if>
             <if test="remark != null and remark != ''">
                 and remark = #{remark}
+            </if>
+            <if test="createUser != null and createUser != ''">
+                and create_user = #{createUser}
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                and update_user = #{updateUser}
             </if>
         </where>
     </select>
 
     <!--新增所有列-->
     <insert id="save" >
-        insert into sys_role(role_id, role_name, role_key, role_sort, data_scope, menu_check_strictly, dept_check_strictly, status, del_flag, create_by, create_time, update_by, update_time, remark)
-        values (#{roleId}, #{roleName}, #{roleKey}, #{roleSort}, #{dataScope}, #{menuCheckStrictly}, #{deptCheckStrictly}, #{status}, #{delFlag}, #{createBy}, #{createTime}, #{updateBy}, #{updateTime}, #{remark})
+        insert into sys_role(role_id, role_name, role_key, role_sort, data_scope, menu_check_strictly, dept_check_strictly, status, del_flag, create_time, update_time, tenant_id, remark, create_user, update_user)
+        values (#{roleId}, #{roleName}, #{roleKey}, #{roleSort}, #{dataScope}, #{menuCheckStrictly}, #{deptCheckStrictly}, #{status}, #{delFlag}, #{createTime}, #{updateTime}, #{tenantId}, #{remark}, #{createUser}, #{updateUser})
     </insert>
 
     <insert id="batchSave">
-        insert into sys_role(role_id, role_name, role_key, role_sort, data_scope, menu_check_strictly, dept_check_strictly, status, del_flag, create_by, create_time, update_by, update_time, remark)
+        insert into sys_role(role_id, role_name, role_key, role_sort, data_scope, menu_check_strictly, dept_check_strictly, status, del_flag, create_time, update_time, tenant_id, remark, create_user, update_user)
         values
         <foreach collection="entities" item="entity" separator=",">
-        (#{entity.roleId}, #{entity.roleName}, #{entity.roleKey}, #{entity.roleSort}, #{entity.dataScope}, #{entity.menuCheckStrictly}, #{entity.deptCheckStrictly}, #{entity.status}, #{entity.delFlag}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+        (#{entity.roleId}, #{entity.roleName}, #{entity.roleKey}, #{entity.roleSort}, #{entity.dataScope}, #{entity.menuCheckStrictly}, #{entity.deptCheckStrictly}, #{entity.status}, #{entity.delFlag}, #{entity.createTime}, #{entity.updateTime}, #{entity.tenantId}, #{entity.remark}, #{entity.createUser}, #{entity.updateUser})
         </foreach>
     </insert>
 
     <insert id="saveOrUpdateBatch">
-        insert into sys_role(role_id, role_name, role_key, role_sort, data_scope, menu_check_strictly, dept_check_strictly, status, del_flag, create_by, create_time, update_by, update_time, remark)
+        insert into sys_role(role_id, role_name, role_key, role_sort, data_scope, menu_check_strictly, dept_check_strictly, status, del_flag, create_time, update_time, tenant_id, remark, create_user, update_user)
         values
         <foreach collection="entities" item="entity" separator=",">
-            (#{entity.roleId}, #{entity.roleName}, #{entity.roleKey}, #{entity.roleSort}, #{entity.dataScope}, #{entity.menuCheckStrictly}, #{entity.deptCheckStrictly}, #{entity.status}, #{entity.delFlag}, #{entity.createBy}, #{entity.createTime}, #{entity.updateBy}, #{entity.updateTime}, #{entity.remark})
+            (#{entity.roleId}, #{entity.roleName}, #{entity.roleKey}, #{entity.roleSort}, #{entity.dataScope}, #{entity.menuCheckStrictly}, #{entity.deptCheckStrictly}, #{entity.status}, #{entity.delFlag}, #{entity.createTime}, #{entity.updateTime}, #{entity.tenantId}, #{entity.remark}, #{entity.createUser}, #{entity.updateUser})
         </foreach>
         on duplicate key update
         role_id = values(role_id),
@@ -209,11 +279,12 @@
         dept_check_strictly = values(dept_check_strictly),
         status = values(status),
         del_flag = values(del_flag),
-        create_by = values(create_by),
         create_time = values(create_time),
-        update_by = values(update_by),
         update_time = values(update_time),
-        remark = values(remark)
+        tenant_id = values(tenant_id),
+        remark = values(remark),
+        create_user = values(create_user),
+        update_user = values(update_user)
     </insert>
 
     <!--通过主键修改数据-->
@@ -244,20 +315,23 @@
             <if test="delFlag != null and delFlag != ''">
                 del_flag = #{delFlag},
             </if>
-            <if test="createBy != null and createBy != ''">
-                create_by = #{createBy},
-            </if>
             <if test="createTime != null">
                 create_time = #{createTime},
-            </if>
-            <if test="updateBy != null and updateBy != ''">
-                update_by = #{updateBy},
             </if>
             <if test="updateTime != null">
                 update_time = #{updateTime},
             </if>
+            <if test="tenantId != null and tenantId != ''">
+                tenant_id = #{tenantId},
+            </if>
             <if test="remark != null and remark != ''">
                 remark = #{remark},
+            </if>
+            <if test="createUser != null and createUser != ''">
+                create_user = #{createUser},
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                update_user = #{updateUser},
             </if>
         </set>
         where role_id = #{roleId}
@@ -291,20 +365,23 @@
             <if test="delFlag != null and delFlag != ''">
                 del_flag = #{delFlag},
             </if>
-            <if test="createBy != null and createBy != ''">
-                create_by = #{createBy},
-            </if>
             <if test="createTime != null">
                 create_time = #{createTime},
-            </if>
-            <if test="updateBy != null and updateBy != ''">
-                update_by = #{updateBy},
             </if>
             <if test="updateTime != null">
                 update_time = #{updateTime},
             </if>
+            <if test="tenantId != null and tenantId != ''">
+                tenant_id = #{tenantId},
+            </if>
             <if test="remark != null and remark != ''">
                 remark = #{remark},
+            </if>
+            <if test="createUser != null and createUser != ''">
+                create_user = #{createUser},
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                update_user = #{updateUser},
             </if>
         </set>
                 <where>
@@ -335,20 +412,23 @@
             <if test="delFlag != null and delFlag != ''">
                 and del_flag = #{delFlag}
             </if>
-            <if test="createBy != null and createBy != ''">
-                and create_by = #{createBy}
-            </if>
             <if test="createTime != null">
                 and create_time = #{createTime}
-            </if>
-            <if test="updateBy != null and updateBy != ''">
-                and update_by = #{updateBy}
             </if>
             <if test="updateTime != null">
                 and update_time = #{updateTime}
             </if>
+            <if test="tenantId != null and tenantId != ''">
+                and tenant_id = #{tenantId}
+            </if>
             <if test="remark != null and remark != ''">
                 and remark = #{remark}
+            </if>
+            <if test="createUser != null and createUser != ''">
+                and create_user = #{createUser}
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                and update_user = #{updateUser}
             </if>
         </where>
     </update>
@@ -389,20 +469,23 @@
             <if test="delFlag != null and delFlag != ''">
                 and del_flag = #{delFlag}
             </if>
-            <if test="createBy != null and createBy != ''">
-                and create_by = #{createBy}
-            </if>
             <if test="createTime != null">
                 and create_time = #{createTime}
-            </if>
-            <if test="updateBy != null and updateBy != ''">
-                and update_by = #{updateBy}
             </if>
             <if test="updateTime != null">
                 and update_time = #{updateTime}
             </if>
+            <if test="tenantId != null and tenantId != ''">
+                and tenant_id = #{tenantId}
+            </if>
             <if test="remark != null and remark != ''">
                 and remark = #{remark}
+            </if>
+            <if test="createUser != null and createUser != ''">
+                and create_user = #{createUser}
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                and update_user = #{updateUser}
             </if>
         </where>
     </delete>

@@ -7,8 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 /**
  * 角色和菜单关联表(SysRoleMenu)表数据库访问层
  *
- * @author shiwg
- * @since 2022-02-17 15:05:19
+ * @author author
+ * @since 2022-05-21 16:25:13
  */
  @Mapper
 public interface SysRoleMenuDao extends BaseDao<SysRoleMenu, Long>{

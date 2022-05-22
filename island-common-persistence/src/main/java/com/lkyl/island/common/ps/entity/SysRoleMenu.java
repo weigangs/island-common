@@ -9,7 +9,7 @@ import java.util.Date;
 @Data
 @ToString
 public class SysRoleMenu implements Serializable {
-    private static final long serialVersionUID = 921401016772076616L;
+    private static final long serialVersionUID = -59985905955278461L;
     /**
      * 角色ID
      */
@@ -18,6 +18,10 @@ public class SysRoleMenu implements Serializable {
      * 菜单ID
      */
     private Long menuId;
+    /**
+     * 租户
+     */
+    private String tenantId;
 
 
 }

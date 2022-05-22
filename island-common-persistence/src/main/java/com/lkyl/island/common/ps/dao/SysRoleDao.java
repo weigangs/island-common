@@ -7,8 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 /**
  * 角色信息表(SysRole)表数据库访问层
  *
- * @author shiwg
- * @since 2022-02-17 15:04:53
+ * @author author
+ * @since 2022-05-21 16:24:52
  */
  @Mapper
 public interface SysRoleDao extends BaseDao<SysRole, Long>{
