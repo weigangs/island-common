@@ -13,7 +13,7 @@ fi
 
 is_Running(){
     PIDS=`ps -ef|grep -w $JAR_NAME|grep -v grep|awk '{print $2}' `
-    if [ -z "${pid}" ]; then
+    if [ -z "${PIDS}" ]; then
     return 1
     else
     return 0
