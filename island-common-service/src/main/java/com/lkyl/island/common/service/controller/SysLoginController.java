@@ -38,6 +38,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
@@ -68,8 +69,13 @@ public class SysLoginController {
     public ResponseEntity<?> principal(Principal principal, Authentication authentication) {
         SysUserVO userVO = new SysUserVO();
         if(principal instanceof OAuth2Authentication) {
-            if(((OAuth2Authentication) principal).getPrincipal() instanceof OceanUserPrincipal)
+            if(((OAuth2Authentication) principal).getPrincipal() instanceof OceanUserPrincipal){
                 userVO.setUserId(((OceanUserPrincipal) ((OAuth2Authentication) principal).getPrincipal()).getUserId());
+                Optional<String> optionalAvatar = Optional.ofNullable(((OceanUserPrincipal) ((OAuth2Authentication) principal).getPrincipal()).getAvatar());
+                optionalAvatar.ifPresentOrElse(e->userVO.setAvatar(e), ()->{
+                    userVO.setAvatar("");
+                });
+            }
         }
         userVO.setUserName(authentication.getName());
         userVO.setRoles(authentication.getAuthorities().stream().map(v -> ((GrantedAuthority) v).getAuthority()).collect(Collectors.toList()));

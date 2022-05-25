@@ -86,7 +86,6 @@ create table sys_menu
   (1,'系统管理',0,1,'system',NULL,1,0,'M','0','0','','system','admin','2021-12-17 11:14:12','',NULL,'系统管理目录'),
   (2,'系统监控',0,2,'monitor',NULL,1,0,'M','0','0','','monitor','admin','2021-12-17 11:14:12','',NULL,'系统监控目录'),
   (3,'系统工具',0,3,'tool',NULL,1,0,'M','0','0','','tool','admin','2021-12-17 11:14:12','',NULL,'系统工具目录'),
-  (4,'若依官网',0,4,'http://ruoyi.vip',NULL,0,0,'M','0','0','','guide','admin','2021-12-17 11:14:12','',NULL,'若依官网地址'),
   (100,'用户管理',1,1,'user','system/user/index',1,0,'C','0','0','system:user:list','user','admin','2021-12-17 11:14:12','',NULL,'用户管理菜单'),
   (101,'角色管理',1,2,'role','system/role/index',1,0,'C','0','0','system:role:list','peoples','admin','2021-12-17 11:14:12','',NULL,'角色管理菜单'),
   (102,'菜单管理',1,3,'menu','system/menu/index',1,0,'C','0','0','system:menu:list','tree-table','admin','2021-12-17 11:14:12','',NULL,'菜单管理菜单'),
