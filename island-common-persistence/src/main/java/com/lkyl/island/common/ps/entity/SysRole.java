@@ -6,10 +6,17 @@ import lombok.Data;
 import lombok.ToString;
 import java.util.Date;
 
+/**
+ * 角色信息表(SysRole)实体类DO
+ *
+ * @author author
+ * @since 2022-06-04 20:29:56
+ */
+
 @Data
 @ToString
 public class SysRole implements Serializable {
-    private static final long serialVersionUID = -55312921753721341L;
+    private static final long serialVersionUID = -85439893837344353L;
     /**
      * 角色ID
      */

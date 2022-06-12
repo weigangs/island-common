@@ -6,11 +6,18 @@ import lombok.ToString;
 import java.util.Date;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+/**
+ * 字典数据表(SysDictData)请求实体DTO
+ *
+ * @author author
+ * @since 2022-06-04 20:29:56
+ */
 @Data
 @ApiModel("字典数据表请求体")
 @ToString
 public class SysDictDataDTO implements Serializable {
-    private static final long serialVersionUID = 302856844730242573L;
+    private static final long serialVersionUID = -32950534235335680L;
         @ApiModelProperty("字典编码")
         private Long dictCode;
         @ApiModelProperty("字典排序")

@@ -3,20 +3,20 @@
 <mapper namespace="com.lkyl.island.common.ps.dao.SysDictTypeDao">
 
     <resultMap type="com.lkyl.island.common.ps.entity.SysDictType" id="SysDictTypeMap">
-        <result property="dictId" column="dict_id" jdbcType="INTEGER"/>
-        <result property="dictName" column="dict_name" jdbcType="VARCHAR"/>
-        <result property="dictType" column="dict_type" jdbcType="VARCHAR"/>
-        <result property="status" column="status" jdbcType="VARCHAR"/>
-        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-        <result property="tenantId" column="tenant_id" jdbcType="VARCHAR"/>
-        <result property="remark" column="remark" jdbcType="VARCHAR"/>
-        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
-        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
-        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
-    </resultMap>
+		        <result property="dictId" column="dict_id" jdbcType="INTEGER"/>
+		        <result property="dictName" column="dict_name" jdbcType="VARCHAR"/>
+		        <result property="dictType" column="dict_type" jdbcType="VARCHAR"/>
+		        <result property="status" column="status" jdbcType="VARCHAR"/>
+		        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+		        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+		        <result property="tenantId" column="tenant_id" jdbcType="VARCHAR"/>
+		        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+		        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+		        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+		        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+		    </resultMap>
 
-    <!--查询单个-->
+    <!--查询一条记录-->
     <select id="get" resultMap="SysDictTypeMap">
         select
           dict_id, dict_name, dict_type, status, create_time, update_time, tenant_id, remark, create_user, update_user, del_flag
@@ -24,7 +24,7 @@
         where dict_id = #{id}
     </select>
 
-    <!--查询指定行数据-->
+    <!--查询某一条记录-->
     <select id="getByParam" resultMap="SysDictTypeMap">
         select
           dict_id, dict_name, dict_type, status, create_time, update_time, tenant_id, remark, create_user, update_user, del_flag
@@ -66,7 +66,7 @@
         </where>
     </select>
 
-	    <!--根据主键ID list 查询-->
+	<!--根据主键ID列表查询-->
     <select id="queryByIdList" parameterType="java.util.Map" resultMap="SysDictTypeMap">
         select
           dict_id, dict_name, dict_type, status, create_time, update_time, tenant_id, remark, create_user, update_user, del_flag
@@ -114,7 +114,7 @@
         </where>
     </select>
 
-	    <!--查询列表据-->
+	<!--查询列表-->
     <select id="list" resultMap="SysDictTypeMap">
         select
           dict_id, dict_name, dict_type, status, create_time, update_time, tenant_id, remark, create_user, update_user, del_flag
@@ -197,12 +197,13 @@
         </where>
     </select>
 
-    <!--新增所有列-->
+    <!--新增一条记录-->
     <insert id="save" >
         insert into sys_dict_type(dict_id, dict_name, dict_type, status, create_time, update_time, tenant_id, remark, create_user, update_user, del_flag)
         values (#{dictId}, #{dictName}, #{dictType}, #{status}, #{createTime}, #{updateTime}, #{tenantId}, #{remark}, #{createUser}, #{updateUser}, #{delFlag})
     </insert>
 
+	<!-- 批量新增 -->
     <insert id="batchSave">
         insert into sys_dict_type(dict_id, dict_name, dict_type, status, create_time, update_time, tenant_id, remark, create_user, update_user, del_flag)
         values
@@ -211,13 +212,14 @@
         </foreach>
     </insert>
 
+	<!-- 批量新增或更新 -->
     <insert id="saveOrUpdateBatch">
         insert into sys_dict_type(dict_id, dict_name, dict_type, status, create_time, update_time, tenant_id, remark, create_user, update_user, del_flag)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.dictId}, #{entity.dictName}, #{entity.dictType}, #{entity.status}, #{entity.createTime}, #{entity.updateTime}, #{entity.tenantId}, #{entity.remark}, #{entity.createUser}, #{entity.updateUser}, #{entity.delFlag})
         </foreach>
-        on duplicate key update
+        on duplicate (dict_id) update
         dict_id = values(dict_id),
         dict_name = values(dict_name),
         dict_type = values(dict_type),
@@ -269,129 +271,136 @@
         where dict_id = #{dictId}
     </update>
 
-    <!--通过主键修改数据-->
+    <!--通过where条件，根据setter字段更新记录-->
     <update id="updateOnWhere">
         update sys_dict_type
         <set>
             <if test="dictName != null and dictName != ''">
-                dict_name = #{dictName},
+                dict_name = #{setter.dictName},
             </if>
             <if test="dictType != null and dictType != ''">
-                dict_type = #{dictType},
+                dict_type = #{setter.dictType},
             </if>
             <if test="status != null and status != ''">
-                status = #{status},
+                status = #{setter.status},
             </if>
             <if test="createTime != null">
-                create_time = #{createTime},
+                create_time = #{setter.createTime},
             </if>
             <if test="updateTime != null">
-                update_time = #{updateTime},
+                update_time = #{setter.updateTime},
             </if>
             <if test="tenantId != null and tenantId != ''">
-                tenant_id = #{tenantId},
+                tenant_id = #{setter.tenantId},
             </if>
             <if test="remark != null and remark != ''">
-                remark = #{remark},
+                remark = #{setter.remark},
             </if>
             <if test="createUser != null and createUser != ''">
-                create_user = #{createUser},
+                create_user = #{setter.createUser},
             </if>
             <if test="updateUser != null and updateUser != ''">
-                update_user = #{updateUser},
+                update_user = #{setter.updateUser},
             </if>
             <if test="delFlag != null and delFlag != ''">
-                del_flag = #{delFlag},
+                del_flag = #{setter.delFlag},
             </if>
         </set>
-                <where>
+        <where>
             <if test="dictId != null">
-                and dict_id = #{dictId}
+                and dict_id = #{where.dictId}
             </if>
             <if test="dictName != null and dictName != ''">
-                and dict_name = #{dictName}
+                and dict_name = #{where.dictName}
             </if>
             <if test="dictType != null and dictType != ''">
-                and dict_type = #{dictType}
+                and dict_type = #{where.dictType}
             </if>
             <if test="status != null and status != ''">
-                and status = #{status}
+                and status = #{where.status}
             </if>
             <if test="createTime != null">
-                and create_time = #{createTime}
+                and create_time = #{where.createTime}
             </if>
             <if test="updateTime != null">
-                and update_time = #{updateTime}
+                and update_time = #{where.updateTime}
             </if>
             <if test="tenantId != null and tenantId != ''">
-                and tenant_id = #{tenantId}
+                and tenant_id = #{where.tenantId}
             </if>
             <if test="remark != null and remark != ''">
-                and remark = #{remark}
+                and remark = #{where.remark}
             </if>
             <if test="createUser != null and createUser != ''">
-                and create_user = #{createUser}
+                and create_user = #{where.createUser}
             </if>
             <if test="updateUser != null and updateUser != ''">
-                and update_user = #{updateUser}
+                and update_user = #{where.updateUser}
             </if>
             <if test="delFlag != null and delFlag != ''">
-                and del_flag = #{delFlag}
+                and del_flag = #{where.delFlag}
             </if>
         </where>
     </update>
 
-    <!--通过主键删除-->
-    <delete id="remove">
+    <!--通过主键物理删除-->
+    <delete id="removeById">
         delete from sys_dict_type where dict_id = #{dictId}
     </delete>
 
-	<!--通过where删除-->
+	<!--通过where条件进行物理删除-->
     <delete id="removeOnWhere">
         delete from sys_dict_type
-		                <where>
-            <if test="dictId != null">
-                and dict_id = #{dictId}
-            </if>
-            <if test="dictName != null and dictName != ''">
-                and dict_name = #{dictName}
-            </if>
-            <if test="dictType != null and dictType != ''">
-                and dict_type = #{dictType}
-            </if>
-            <if test="status != null and status != ''">
-                and status = #{status}
-            </if>
-            <if test="createTime != null">
-                and create_time = #{createTime}
-            </if>
-            <if test="updateTime != null">
-                and update_time = #{updateTime}
-            </if>
-            <if test="tenantId != null and tenantId != ''">
-                and tenant_id = #{tenantId}
-            </if>
-            <if test="remark != null and remark != ''">
-                and remark = #{remark}
-            </if>
-            <if test="createUser != null and createUser != ''">
-                and create_user = #{createUser}
-            </if>
-            <if test="updateUser != null and updateUser != ''">
-                and update_user = #{updateUser}
-            </if>
-            <if test="delFlag != null and delFlag != ''">
-                and del_flag = #{delFlag}
-            </if>
+		<where>
+		<if test="dictId != null">
+            and dict_id = #{dictId}
+        </if>
+		<if test="dictName != null and dictName != ''">
+            and dict_name = #{dictName}
+        </if>
+		<if test="dictType != null and dictType != ''">
+            and dict_type = #{dictType}
+        </if>
+		<if test="status != null and status != ''">
+            and status = #{status}
+        </if>
+		<if test="createTime != null">
+            and create_time = #{createTime}
+        </if>
+		<if test="updateTime != null">
+            and update_time = #{updateTime}
+        </if>
+		<if test="tenantId != null and tenantId != ''">
+            and tenant_id = #{tenantId}
+        </if>
+		<if test="remark != null and remark != ''">
+            and remark = #{remark}
+        </if>
+		<if test="createUser != null and createUser != ''">
+            and create_user = #{createUser}
+        </if>
+		<if test="updateUser != null and updateUser != ''">
+            and update_user = #{updateUser}
+        </if>
+		<if test="delFlag != null and delFlag != ''">
+            and del_flag = #{delFlag}
+        </if>
         </where>
     </delete>
-	<!-- 通过ID批量删除 -->
-	    <delete id="batchRemoveById">
+	<!-- 通过ID列表批量物理删除 -->
+	<delete id="batchRemoveById">
         DELETE FROM sys_dict_type
         where dict_id in
-		        <foreach item="id" collection="array" open="(" separator="," close=")">
-#{id}        </foreach>
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
     </delete>
+
+	<!--通过主键ID进行逻辑删除-->
+	<update id="logicRemoveById">
+		update sys_dict_type set del_flag = '1' where dict_id = #{dictId}
+	</update>
+
 
 </mapper>
 

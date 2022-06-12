@@ -9,11 +9,17 @@ import java.util.List;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * 用户信息表(SysUser)响应实体VO
+ *
+ * @author author
+ * @since 2022-06-04 20:29:56
+ */
 @Data
 @ApiModel("用户信息表响应体")
 @ToString
 public class SysUserVO implements Serializable {
-    private static final long serialVersionUID = 267300643468072434L;
+    private static final long serialVersionUID = -56673766171624768L;
          @ApiModelProperty("用户ID")
          private Long userId;
          @ApiModelProperty("部门ID")
@@ -54,8 +60,8 @@ public class SysUserVO implements Serializable {
          private String createUser;
          @ApiModelProperty("更新者")
          private String updateUser;
-     @ApiModelProperty("角色列表")
-     private List<String> roles;
+         @ApiModelProperty("角色列表")
+         private List<String> roles;
 
 }
 

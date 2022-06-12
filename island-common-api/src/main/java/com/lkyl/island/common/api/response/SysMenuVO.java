@@ -3,19 +3,21 @@ package com.lkyl.island.common.api.response;
 import java.io.Serializable;
 import lombok.Data;
 import lombok.ToString;
-
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * 菜单权限表(SysMenu)响应实体VO
+ *
+ * @author author
+ * @since 2022-06-04 20:29:56
+ */
 @Data
 @ApiModel("菜单权限表响应体")
 @ToString
 public class SysMenuVO implements Serializable {
-    private static final long serialVersionUID = -12843817619226986L;
+    private static final long serialVersionUID = 601578213752786020L;
          @ApiModelProperty("菜单ID")
          private Long menuId;
          @ApiModelProperty("菜单名称")
@@ -56,9 +58,6 @@ public class SysMenuVO implements Serializable {
          private String updateUser;
          @ApiModelProperty("删除标识")
          private String delFlag;
-     /** 子菜单 */
-     @ApiModelProperty("子菜单列表")
-     private List<SysMenuVO> childList = new ArrayList<>();
 
 
 }

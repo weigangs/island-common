@@ -25,6 +25,7 @@ import java.util.List;
 
 /**
  * Oauth2 user login and change password
+ * @author nicholas
  */
 @Service
 public class UserDetailServiceImpl implements UserDetailsService, UserDetailsPasswordService {
@@ -46,8 +47,9 @@ public class UserDetailServiceImpl implements UserDetailsService, UserDetailsPas
 
         SysUser sysUser = sysUserService.getByParam(sysUserQuery);
 
-        if(ObjectUtils.isEmpty(sysUser))
+        if(ObjectUtils.isEmpty(sysUser)) {
             return null;
+        }
 
         SysUserRole sysUserRoleQuery = new SysUserRole();
         sysUserRoleQuery.setUserId(sysUser.getUserId());

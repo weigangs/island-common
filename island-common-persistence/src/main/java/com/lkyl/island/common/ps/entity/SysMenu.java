@@ -6,10 +6,17 @@ import lombok.Data;
 import lombok.ToString;
 import java.util.Date;
 
+/**
+ * 菜单权限表(SysMenu)实体类DO
+ *
+ * @author author
+ * @since 2022-06-04 20:29:56
+ */
+
 @Data
 @ToString
 public class SysMenu implements Serializable {
-    private static final long serialVersionUID = -39008421809182210L;
+    private static final long serialVersionUID = 492976248668146974L;
     /**
      * 菜单ID
      */

@@ -3,24 +3,24 @@
 <mapper namespace="com.lkyl.island.common.ps.dao.SysDeptDao">
 
     <resultMap type="com.lkyl.island.common.ps.entity.SysDept" id="SysDeptMap">
-        <result property="deptId" column="dept_id" jdbcType="INTEGER"/>
-        <result property="parentId" column="parent_id" jdbcType="INTEGER"/>
-        <result property="ancestors" column="ancestors" jdbcType="VARCHAR"/>
-        <result property="deptName" column="dept_name" jdbcType="VARCHAR"/>
-        <result property="orderNum" column="order_num" jdbcType="INTEGER"/>
-        <result property="leader" column="leader" jdbcType="VARCHAR"/>
-        <result property="phone" column="phone" jdbcType="VARCHAR"/>
-        <result property="email" column="email" jdbcType="VARCHAR"/>
-        <result property="status" column="status" jdbcType="VARCHAR"/>
-        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
-        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-        <result property="tenantId" column="tenant_id" jdbcType="VARCHAR"/>
-        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
-        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
-    </resultMap>
+		        <result property="deptId" column="dept_id" jdbcType="INTEGER"/>
+		        <result property="parentId" column="parent_id" jdbcType="INTEGER"/>
+		        <result property="ancestors" column="ancestors" jdbcType="VARCHAR"/>
+		        <result property="deptName" column="dept_name" jdbcType="VARCHAR"/>
+		        <result property="orderNum" column="order_num" jdbcType="INTEGER"/>
+		        <result property="leader" column="leader" jdbcType="VARCHAR"/>
+		        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+		        <result property="email" column="email" jdbcType="VARCHAR"/>
+		        <result property="status" column="status" jdbcType="VARCHAR"/>
+		        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+		        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+		        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+		        <result property="tenantId" column="tenant_id" jdbcType="VARCHAR"/>
+		        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+		        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+		    </resultMap>
 
-    <!--查询单个-->
+    <!--查询一条记录-->
     <select id="get" resultMap="SysDeptMap">
         select
           dept_id, parent_id, ancestors, dept_name, order_num, leader, phone, email, status, del_flag, create_time, update_time, tenant_id, create_user, update_user
@@ -28,7 +28,7 @@
         where dept_id = #{id}
     </select>
 
-    <!--查询指定行数据-->
+    <!--查询某一条记录-->
     <select id="getByParam" resultMap="SysDeptMap">
         select
           dept_id, parent_id, ancestors, dept_name, order_num, leader, phone, email, status, del_flag, create_time, update_time, tenant_id, create_user, update_user
@@ -82,7 +82,7 @@
         </where>
     </select>
 
-	    <!--根据主键ID list 查询-->
+	<!--根据主键ID列表查询-->
     <select id="queryByIdList" parameterType="java.util.Map" resultMap="SysDeptMap">
         select
           dept_id, parent_id, ancestors, dept_name, order_num, leader, phone, email, status, del_flag, create_time, update_time, tenant_id, create_user, update_user
@@ -142,7 +142,7 @@
         </where>
     </select>
 
-	    <!--查询列表据-->
+	<!--查询列表-->
     <select id="list" resultMap="SysDeptMap">
         select
           dept_id, parent_id, ancestors, dept_name, order_num, leader, phone, email, status, del_flag, create_time, update_time, tenant_id, create_user, update_user
@@ -249,12 +249,13 @@
         </where>
     </select>
 
-    <!--新增所有列-->
+    <!--新增一条记录-->
     <insert id="save" >
         insert into sys_dept(dept_id, parent_id, ancestors, dept_name, order_num, leader, phone, email, status, del_flag, create_time, update_time, tenant_id, create_user, update_user)
         values (#{deptId}, #{parentId}, #{ancestors}, #{deptName}, #{orderNum}, #{leader}, #{phone}, #{email}, #{status}, #{delFlag}, #{createTime}, #{updateTime}, #{tenantId}, #{createUser}, #{updateUser})
     </insert>
 
+	<!-- 批量新增 -->
     <insert id="batchSave">
         insert into sys_dept(dept_id, parent_id, ancestors, dept_name, order_num, leader, phone, email, status, del_flag, create_time, update_time, tenant_id, create_user, update_user)
         values
@@ -263,13 +264,14 @@
         </foreach>
     </insert>
 
+	<!-- 批量新增或更新 -->
     <insert id="saveOrUpdateBatch">
         insert into sys_dept(dept_id, parent_id, ancestors, dept_name, order_num, leader, phone, email, status, del_flag, create_time, update_time, tenant_id, create_user, update_user)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.deptId}, #{entity.parentId}, #{entity.ancestors}, #{entity.deptName}, #{entity.orderNum}, #{entity.leader}, #{entity.phone}, #{entity.email}, #{entity.status}, #{entity.delFlag}, #{entity.createTime}, #{entity.updateTime}, #{entity.tenantId}, #{entity.createUser}, #{entity.updateUser})
         </foreach>
-        on duplicate key update
+        on duplicate (dept_id) update
         dept_id = values(dept_id),
         parent_id = values(parent_id),
         ancestors = values(ancestors),
@@ -337,165 +339,172 @@
         where dept_id = #{deptId}
     </update>
 
-    <!--通过主键修改数据-->
+    <!--通过where条件，根据setter字段更新记录-->
     <update id="updateOnWhere">
         update sys_dept
         <set>
             <if test="parentId != null">
-                parent_id = #{parentId},
+                parent_id = #{setter.parentId},
             </if>
             <if test="ancestors != null and ancestors != ''">
-                ancestors = #{ancestors},
+                ancestors = #{setter.ancestors},
             </if>
             <if test="deptName != null and deptName != ''">
-                dept_name = #{deptName},
+                dept_name = #{setter.deptName},
             </if>
             <if test="orderNum != null">
-                order_num = #{orderNum},
+                order_num = #{setter.orderNum},
             </if>
             <if test="leader != null and leader != ''">
-                leader = #{leader},
+                leader = #{setter.leader},
             </if>
             <if test="phone != null and phone != ''">
-                phone = #{phone},
+                phone = #{setter.phone},
             </if>
             <if test="email != null and email != ''">
-                email = #{email},
+                email = #{setter.email},
             </if>
             <if test="status != null and status != ''">
-                status = #{status},
+                status = #{setter.status},
             </if>
             <if test="delFlag != null and delFlag != ''">
-                del_flag = #{delFlag},
+                del_flag = #{setter.delFlag},
             </if>
             <if test="createTime != null">
-                create_time = #{createTime},
+                create_time = #{setter.createTime},
             </if>
             <if test="updateTime != null">
-                update_time = #{updateTime},
+                update_time = #{setter.updateTime},
             </if>
             <if test="tenantId != null and tenantId != ''">
-                tenant_id = #{tenantId},
+                tenant_id = #{setter.tenantId},
             </if>
             <if test="createUser != null and createUser != ''">
-                create_user = #{createUser},
+                create_user = #{setter.createUser},
             </if>
             <if test="updateUser != null and updateUser != ''">
-                update_user = #{updateUser},
+                update_user = #{setter.updateUser},
             </if>
         </set>
-                <where>
+        <where>
             <if test="deptId != null">
-                and dept_id = #{deptId}
+                and dept_id = #{where.deptId}
             </if>
             <if test="parentId != null">
-                and parent_id = #{parentId}
+                and parent_id = #{where.parentId}
             </if>
             <if test="ancestors != null and ancestors != ''">
-                and ancestors = #{ancestors}
+                and ancestors = #{where.ancestors}
             </if>
             <if test="deptName != null and deptName != ''">
-                and dept_name = #{deptName}
+                and dept_name = #{where.deptName}
             </if>
             <if test="orderNum != null">
-                and order_num = #{orderNum}
+                and order_num = #{where.orderNum}
             </if>
             <if test="leader != null and leader != ''">
-                and leader = #{leader}
+                and leader = #{where.leader}
             </if>
             <if test="phone != null and phone != ''">
-                and phone = #{phone}
+                and phone = #{where.phone}
             </if>
             <if test="email != null and email != ''">
-                and email = #{email}
+                and email = #{where.email}
             </if>
             <if test="status != null and status != ''">
-                and status = #{status}
+                and status = #{where.status}
             </if>
             <if test="delFlag != null and delFlag != ''">
-                and del_flag = #{delFlag}
+                and del_flag = #{where.delFlag}
             </if>
             <if test="createTime != null">
-                and create_time = #{createTime}
+                and create_time = #{where.createTime}
             </if>
             <if test="updateTime != null">
-                and update_time = #{updateTime}
+                and update_time = #{where.updateTime}
             </if>
             <if test="tenantId != null and tenantId != ''">
-                and tenant_id = #{tenantId}
+                and tenant_id = #{where.tenantId}
             </if>
             <if test="createUser != null and createUser != ''">
-                and create_user = #{createUser}
+                and create_user = #{where.createUser}
             </if>
             <if test="updateUser != null and updateUser != ''">
-                and update_user = #{updateUser}
+                and update_user = #{where.updateUser}
             </if>
         </where>
     </update>
 
-    <!--通过主键删除-->
-    <delete id="remove">
+    <!--通过主键物理删除-->
+    <delete id="removeById">
         delete from sys_dept where dept_id = #{deptId}
     </delete>
 
-	<!--通过where删除-->
+	<!--通过where条件进行物理删除-->
     <delete id="removeOnWhere">
         delete from sys_dept
-		                <where>
-            <if test="deptId != null">
-                and dept_id = #{deptId}
-            </if>
-            <if test="parentId != null">
-                and parent_id = #{parentId}
-            </if>
-            <if test="ancestors != null and ancestors != ''">
-                and ancestors = #{ancestors}
-            </if>
-            <if test="deptName != null and deptName != ''">
-                and dept_name = #{deptName}
-            </if>
-            <if test="orderNum != null">
-                and order_num = #{orderNum}
-            </if>
-            <if test="leader != null and leader != ''">
-                and leader = #{leader}
-            </if>
-            <if test="phone != null and phone != ''">
-                and phone = #{phone}
-            </if>
-            <if test="email != null and email != ''">
-                and email = #{email}
-            </if>
-            <if test="status != null and status != ''">
-                and status = #{status}
-            </if>
-            <if test="delFlag != null and delFlag != ''">
-                and del_flag = #{delFlag}
-            </if>
-            <if test="createTime != null">
-                and create_time = #{createTime}
-            </if>
-            <if test="updateTime != null">
-                and update_time = #{updateTime}
-            </if>
-            <if test="tenantId != null and tenantId != ''">
-                and tenant_id = #{tenantId}
-            </if>
-            <if test="createUser != null and createUser != ''">
-                and create_user = #{createUser}
-            </if>
-            <if test="updateUser != null and updateUser != ''">
-                and update_user = #{updateUser}
-            </if>
+		<where>
+		<if test="deptId != null">
+            and dept_id = #{deptId}
+        </if>
+		<if test="parentId != null">
+            and parent_id = #{parentId}
+        </if>
+		<if test="ancestors != null and ancestors != ''">
+            and ancestors = #{ancestors}
+        </if>
+		<if test="deptName != null and deptName != ''">
+            and dept_name = #{deptName}
+        </if>
+		<if test="orderNum != null">
+            and order_num = #{orderNum}
+        </if>
+		<if test="leader != null and leader != ''">
+            and leader = #{leader}
+        </if>
+		<if test="phone != null and phone != ''">
+            and phone = #{phone}
+        </if>
+		<if test="email != null and email != ''">
+            and email = #{email}
+        </if>
+		<if test="status != null and status != ''">
+            and status = #{status}
+        </if>
+		<if test="delFlag != null and delFlag != ''">
+            and del_flag = #{delFlag}
+        </if>
+		<if test="createTime != null">
+            and create_time = #{createTime}
+        </if>
+		<if test="updateTime != null">
+            and update_time = #{updateTime}
+        </if>
+		<if test="tenantId != null and tenantId != ''">
+            and tenant_id = #{tenantId}
+        </if>
+		<if test="createUser != null and createUser != ''">
+            and create_user = #{createUser}
+        </if>
+		<if test="updateUser != null and updateUser != ''">
+            and update_user = #{updateUser}
+        </if>
         </where>
     </delete>
-	<!-- 通过ID批量删除 -->
-	    <delete id="batchRemoveById">
+	<!-- 通过ID列表批量物理删除 -->
+	<delete id="batchRemoveById">
         DELETE FROM sys_dept
         where dept_id in
-		        <foreach item="id" collection="array" open="(" separator="," close=")">
-#{id}        </foreach>
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
     </delete>
+
+	<!--通过主键ID进行逻辑删除-->
+	<update id="logicRemoveById">
+		update sys_dept set del_flag = '1' where dept_id = #{deptId}
+	</update>
+
 
 </mapper>
 

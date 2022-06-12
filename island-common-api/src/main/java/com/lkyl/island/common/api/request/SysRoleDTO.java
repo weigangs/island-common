@@ -6,11 +6,18 @@ import lombok.ToString;
 import java.util.Date;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+/**
+ * 角色信息表(SysRole)请求实体DTO
+ *
+ * @author author
+ * @since 2022-06-04 20:29:56
+ */
 @Data
 @ApiModel("角色信息表请求体")
 @ToString
 public class SysRoleDTO implements Serializable {
-    private static final long serialVersionUID = -31174539854662927L;
+    private static final long serialVersionUID = -81400754570874657L;
         @ApiModelProperty("角色ID")
         private Long roleId;
         @ApiModelProperty("角色名称")

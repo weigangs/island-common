@@ -3,12 +3,12 @@
 <mapper namespace="com.lkyl.island.common.ps.dao.SysRoleMenuDao">
 
     <resultMap type="com.lkyl.island.common.ps.entity.SysRoleMenu" id="SysRoleMenuMap">
-        <result property="roleId" column="role_id" jdbcType="INTEGER"/>
-        <result property="menuId" column="menu_id" jdbcType="INTEGER"/>
-        <result property="tenantId" column="tenant_id" jdbcType="VARCHAR"/>
-    </resultMap>
+		        <result property="roleId" column="role_id" jdbcType="INTEGER"/>
+		        <result property="menuId" column="menu_id" jdbcType="INTEGER"/>
+		        <result property="tenantId" column="tenant_id" jdbcType="VARCHAR"/>
+		    </resultMap>
 
-    <!--查询单个-->
+    <!--查询一条记录-->
     <select id="get" resultMap="SysRoleMenuMap">
         select
           role_id, menu_id, tenant_id
@@ -16,7 +16,7 @@
         where role_id = #{id}
     </select>
 
-    <!--查询指定行数据-->
+    <!--查询某一条记录-->
     <select id="getByParam" resultMap="SysRoleMenuMap">
         select
           role_id, menu_id, tenant_id
@@ -34,7 +34,7 @@
         </where>
     </select>
 
-	    <!--根据主键ID list 查询-->
+	<!--根据主键ID列表查询-->
     <select id="queryByIdList" parameterType="java.util.Map" resultMap="SysRoleMenuMap">
         select
           role_id, menu_id, tenant_id
@@ -58,7 +58,7 @@
         </where>
     </select>
 
-	    <!--查询列表据-->
+	<!--查询列表-->
     <select id="list" resultMap="SysRoleMenuMap">
         select
           role_id, menu_id, tenant_id
@@ -93,12 +93,13 @@
         </where>
     </select>
 
-    <!--新增所有列-->
+    <!--新增一条记录-->
     <insert id="save" >
         insert into sys_role_menu(role_id, menu_id, tenant_id)
         values (#{roleId}, #{menuId}, #{tenantId})
     </insert>
 
+	<!-- 批量新增 -->
     <insert id="batchSave">
         insert into sys_role_menu(role_id, menu_id, tenant_id)
         values
@@ -107,13 +108,14 @@
         </foreach>
     </insert>
 
+	<!-- 批量新增或更新 -->
     <insert id="saveOrUpdateBatch">
         insert into sys_role_menu(role_id, menu_id, tenant_id)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.roleId}, #{entity.menuId}, #{entity.tenantId})
         </foreach>
-        on duplicate key update
+        on duplicate (role_id) update
         role_id = values(role_id),
         menu_id = values(menu_id),
         tenant_id = values(tenant_id)
@@ -130,54 +132,57 @@
         where role_id = #{roleId}
     </update>
 
-    <!--通过主键修改数据-->
+    <!--通过where条件，根据setter字段更新记录-->
     <update id="updateOnWhere">
         update sys_role_menu
         <set>
             <if test="tenantId != null and tenantId != ''">
-                tenant_id = #{tenantId},
+                tenant_id = #{setter.tenantId},
             </if>
         </set>
-                <where>
+        <where>
             <if test="roleId != null">
-                and role_id = #{roleId}
+                and role_id = #{where.roleId}
             </if>
             <if test="menuId != null">
-                and menu_id = #{menuId}
+                and menu_id = #{where.menuId}
             </if>
             <if test="tenantId != null and tenantId != ''">
-                and tenant_id = #{tenantId}
+                and tenant_id = #{where.tenantId}
             </if>
         </where>
     </update>
 
-    <!--通过主键删除-->
-    <delete id="remove">
+    <!--通过主键物理删除-->
+    <delete id="removeById">
         delete from sys_role_menu where role_id = #{roleId}
     </delete>
 
-	<!--通过where删除-->
+	<!--通过where条件进行物理删除-->
     <delete id="removeOnWhere">
         delete from sys_role_menu
-		                <where>
-            <if test="roleId != null">
-                and role_id = #{roleId}
-            </if>
-            <if test="menuId != null">
-                and menu_id = #{menuId}
-            </if>
-            <if test="tenantId != null and tenantId != ''">
-                and tenant_id = #{tenantId}
-            </if>
+		<where>
+		<if test="roleId != null">
+            and role_id = #{roleId}
+        </if>
+		<if test="menuId != null">
+            and menu_id = #{menuId}
+        </if>
+		<if test="tenantId != null and tenantId != ''">
+            and tenant_id = #{tenantId}
+        </if>
         </where>
     </delete>
-	<!-- 通过ID批量删除 -->
-	    <delete id="batchRemoveById">
+	<!-- 通过ID列表批量物理删除 -->
+	<delete id="batchRemoveById">
         DELETE FROM sys_role_menu
         where role_id in
-		        <foreach item="id" collection="array" open="(" separator="," close=")">
-#{id}        </foreach>
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
     </delete>
+
+
 
 </mapper>
 

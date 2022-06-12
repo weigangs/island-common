@@ -8,6 +8,7 @@ package com.lkyl.island.common.service.enums;
  * @createTime: 2022年05月20日 0:16
  */
 public enum RoleEnum {
+    //超级管理员
     ADMIN("1", "超级管理员");
 
     private String code;

@@ -6,10 +6,17 @@ import lombok.Data;
 import lombok.ToString;
 import java.util.Date;
 
+/**
+ * 部门表(SysDept)实体类DO
+ *
+ * @author author
+ * @since 2022-06-04 20:29:56
+ */
+
 @Data
 @ToString
 public class SysDept implements Serializable {
-    private static final long serialVersionUID = 349160987263112543L;
+    private static final long serialVersionUID = 899563570006133594L;
     /**
      * 部门id
      */

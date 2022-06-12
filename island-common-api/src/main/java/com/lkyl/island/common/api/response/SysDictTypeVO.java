@@ -7,11 +7,17 @@ import java.util.Date;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * 字典类型表(SysDictType)响应实体VO
+ *
+ * @author author
+ * @since 2022-06-04 20:29:56
+ */
 @Data
 @ApiModel("字典类型表响应体")
 @ToString
 public class SysDictTypeVO implements Serializable {
-    private static final long serialVersionUID = -82707142189141853L;
+    private static final long serialVersionUID = -28733341176082911L;
          @ApiModelProperty("字典主键")
          private Long dictId;
          @ApiModelProperty("字典名称")

@@ -1,23 +1,12 @@
 package com.lkyl.island.common.service.controller;
 
-import com.lkyl.island.common.ps.entity.SysRoleMenu;
 import com.lkyl.island.common.api.request.SysRoleMenuDTO;
 import com.lkyl.island.common.service.service.SysRoleMenuService;
-import com.lkyl.island.common.service.converter.SysRoleMenuConverter;
-import com.lkyl.oceanframework.common.utils.constant.CommonCode;
-import com.lkyl.oceanframework.common.utils.constant.PageConstant;
-import com.lkyl.oceanframework.common.utils.exception.CommonException;
 import com.lkyl.oceanframework.web.util.CommonResultUtil;
-import com.lkyl.oceanframework.common.utils.utils.PageUtil;
-import com.lkyl.oceanframework.common.utils.utils.CollectionUtils;
-import org.springframework.beans.BeanUtils;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
-
+import com.alibaba.fastjson.JSON;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import java.util.*;
 
 import javax.annotation.Resource;
 
@@ -25,7 +14,7 @@ import javax.annotation.Resource;
  * 角色和菜单关联表(SysRoleMenu)表控制层
  *
  * @author author
- * @since 2022-05-21 18:11:52
+ * @since 2022-06-12 15:54:07
  */
 @Slf4j
 @RestController
@@ -45,14 +34,17 @@ public class SysRoleMenuController {
     */
 	@GetMapping("/getById/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") Long id) {
-        log.info("get SysRoleMenu info start...");
-        Optional<SysRoleMenu> sysRoleMenu = this.sysRoleMenuService.get(id);
-
-        if(null == sysRoleMenu){
-            throw new CommonException(CommonCode.EXCEPTION, "返回对象为NULL!");
+		if(log.isInfoEnabled()) {
+            log.info("get SysRoleMenu info start...");
+			log.info("request param:{}", id);
         }
 
-        return CommonResultUtil.success("获取成功", sysRoleMenu);
+        try{
+            return CommonResultUtil.success("获取成功", this.sysRoleMenuService.detail(id));
+        } catch (Exception e) {
+            log.error("error:", e);
+            throw e;
+        }
     }
 
 	/**
@@ -62,28 +54,20 @@ public class SysRoleMenuController {
      * @return 查询结果
      */
 	@PostMapping("/search")
-    public ResponseEntity<?> search(@RequestParam(value = "page", required = false, defaultValue = "1") String pageString,
-                            @RequestParam(value = "per_page", required = false, defaultValue = "10") String perPageString,
+    public ResponseEntity<?> search(@RequestParam(value = "pageNum", required = false, defaultValue = "1") String pageNum,
+                            @RequestParam(value = "pageSize", required = false, defaultValue = "10") String pageSize,
                             @RequestBody(required = false) SysRoleMenuDTO sysRoleMenuDTO) {
         if(log.isInfoEnabled()) {
             log.info("search SysRoleMenu start...");
+			log.info("request param:{}", JSON.toJSONString(sysRoleMenuDTO));
         }
 
-        int page = PageUtil.parsePage(pageString, PageConstant.PAGE);
-        int perPage = PageUtil.parsePerPage(perPageString, PageConstant.PER_PAGE);
-        PageHelper.startPage(page, perPage);
-		//PageHelper.startPage(page, perPage, "update_time desc");
-		SysRoleMenu queryEntity = new SysRoleMenu();
-
-        BeanUtils.copyProperties(sysRoleMenuDTO, queryEntity);
-        List<SysRoleMenu> sysRoleMenuList = this.sysRoleMenuService.list(queryEntity);
-		PageInfo pageInfo = new PageInfo<>(sysRoleMenuList);
-
-		if(CollectionUtils.isNotEmpty(pageInfo.getList())) {
-            pageInfo.setList(SysRoleMenuConverter.INSTANCE.to(pageInfo.getList()));
+		try{
+            return CommonResultUtil.pagingSuccess("查询成功", this.sysRoleMenuService.search(sysRoleMenuDTO, pageNum, pageSize));
+        } catch (Exception e) {
+            log.error("error:", e);
+            throw e;
         }
-
-        return CommonResultUtil.pagingSuccess("查询成功", pageInfo);
     }
 
 	/**
@@ -95,15 +79,16 @@ public class SysRoleMenuController {
     public ResponseEntity<?> save(@RequestBody SysRoleMenuDTO sysRoleMenuDTO) {
         if(log.isInfoEnabled()) {
             log.info("save SysRoleMenu start...");
-        }
-		SysRoleMenu saveEntity = new SysRoleMenu();
-
-        BeanUtils.copyProperties(sysRoleMenuDTO, saveEntity);
-        if (this.sysRoleMenuService.save(saveEntity) != 1) {
-            throw new CommonException(CommonCode.EXCEPTION, "新增失败!");
+			log.info("request param:{}", JSON.toJSONString(sysRoleMenuDTO));
         }
 
-        return CommonResultUtil.success("新增成功", saveEntity);
+		try{
+            return CommonResultUtil.success("新增成功", this.sysRoleMenuService.insert(sysRoleMenuDTO));
+        } catch (Exception e) {
+            log.error("error:", e);
+            throw e;
+        }
+
     }
 
 	/**
@@ -115,15 +100,16 @@ public class SysRoleMenuController {
     public ResponseEntity<?> update(@RequestBody SysRoleMenuDTO sysRoleMenuDTO) {
         if(log.isInfoEnabled()) {
             log.info("update SysRoleMenu start....");
-        }
-		SysRoleMenu updateEntity = new SysRoleMenu();
-
-        BeanUtils.copyProperties(sysRoleMenuDTO, updateEntity);
-        if(this.sysRoleMenuService.updateById(updateEntity) != 1) {
-            throw new CommonException(CommonCode.EXCEPTION, "更新失败!");
+			log.info("request param:{}", JSON.toJSONString(sysRoleMenuDTO));
         }
 
-        return CommonResultUtil.success("更新成功", updateEntity);
+		try{
+            return CommonResultUtil.success("更新成功", this.sysRoleMenuService.update(sysRoleMenuDTO));
+        } catch (Exception e) {
+            log.error("error:", e);
+            throw e;
+        }
+
     }
 
 	/**
@@ -136,11 +122,15 @@ public class SysRoleMenuController {
     public ResponseEntity<?> remove(@PathVariable("id") Long id) {
         if(log.isInfoEnabled()) {
             log.info("remove SysRoleMenu by id start...");
-        }
-        if (this.sysRoleMenuService.remove(id) != 1) {
-            throw new CommonException(CommonCode.EXCEPTION, "删除失败!");
+			log.info("request param:{}", id);
         }
 
-        return CommonResultUtil.success("删除成功");
+		try{
+            return CommonResultUtil.successMsg("删除成功");
+        } catch (Exception e) {
+            log.error("error:", e);
+            throw e;
+        }
+
     }
 }

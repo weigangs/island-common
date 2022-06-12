@@ -6,11 +6,18 @@ import lombok.ToString;
 import java.util.Date;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+/**
+ * 用户信息表(SysUser)请求实体DTO
+ *
+ * @author author
+ * @since 2022-06-04 20:29:56
+ */
 @Data
 @ApiModel("用户信息表请求体")
 @ToString
 public class SysUserDTO implements Serializable {
-    private static final long serialVersionUID = -40094291918325965L;
+    private static final long serialVersionUID = -59091222127665624L;
         @ApiModelProperty("用户ID")
         private Long userId;
         @ApiModelProperty("部门ID")

@@ -1,23 +1,12 @@
 package com.lkyl.island.common.service.controller;
 
-import com.lkyl.island.common.ps.entity.SysDept;
 import com.lkyl.island.common.api.request.SysDeptDTO;
 import com.lkyl.island.common.service.service.SysDeptService;
-import com.lkyl.island.common.service.converter.SysDeptConverter;
-import com.lkyl.oceanframework.common.utils.constant.CommonCode;
-import com.lkyl.oceanframework.common.utils.constant.PageConstant;
-import com.lkyl.oceanframework.common.utils.exception.CommonException;
 import com.lkyl.oceanframework.web.util.CommonResultUtil;
-import com.lkyl.oceanframework.common.utils.utils.PageUtil;
-import com.lkyl.oceanframework.common.utils.utils.CollectionUtils;
-import org.springframework.beans.BeanUtils;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
-
+import com.alibaba.fastjson.JSON;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import java.util.*;
 
 import javax.annotation.Resource;
 
@@ -25,7 +14,7 @@ import javax.annotation.Resource;
  * 部门表(SysDept)表控制层
  *
  * @author author
- * @since 2022-05-21 18:11:52
+ * @since 2022-06-12 15:54:06
  */
 @Slf4j
 @RestController
@@ -45,14 +34,17 @@ public class SysDeptController {
     */
 	@GetMapping("/getById/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") Long id) {
-        log.info("get SysDept info start...");
-        Optional<SysDept> sysDept = this.sysDeptService.get(id);
-
-        if(null == sysDept){
-            throw new CommonException(CommonCode.EXCEPTION, "返回对象为NULL!");
+		if(log.isInfoEnabled()) {
+            log.info("get SysDept info start...");
+			log.info("request param:{}", id);
         }
 
-        return CommonResultUtil.success("获取成功", sysDept);
+        try{
+            return CommonResultUtil.success("获取成功", this.sysDeptService.detail(id));
+        } catch (Exception e) {
+            log.error("error:", e);
+            throw e;
+        }
     }
 
 	/**
@@ -62,28 +54,20 @@ public class SysDeptController {
      * @return 查询结果
      */
 	@PostMapping("/search")
-    public ResponseEntity<?> search(@RequestParam(value = "page", required = false, defaultValue = "1") String pageString,
-                            @RequestParam(value = "per_page", required = false, defaultValue = "10") String perPageString,
+    public ResponseEntity<?> search(@RequestParam(value = "pageNum", required = false, defaultValue = "1") String pageNum,
+                            @RequestParam(value = "pageSize", required = false, defaultValue = "10") String pageSize,
                             @RequestBody(required = false) SysDeptDTO sysDeptDTO) {
         if(log.isInfoEnabled()) {
             log.info("search SysDept start...");
+			log.info("request param:{}", JSON.toJSONString(sysDeptDTO));
         }
 
-        int page = PageUtil.parsePage(pageString, PageConstant.PAGE);
-        int perPage = PageUtil.parsePerPage(perPageString, PageConstant.PER_PAGE);
-        PageHelper.startPage(page, perPage);
-		//PageHelper.startPage(page, perPage, "update_time desc");
-		SysDept queryEntity = new SysDept();
-
-        BeanUtils.copyProperties(sysDeptDTO, queryEntity);
-        List<SysDept> sysDeptList = this.sysDeptService.list(queryEntity);
-		PageInfo pageInfo = new PageInfo<>(sysDeptList);
-
-		if(CollectionUtils.isNotEmpty(pageInfo.getList())) {
-            pageInfo.setList(SysDeptConverter.INSTANCE.to(pageInfo.getList()));
+		try{
+            return CommonResultUtil.pagingSuccess("查询成功", this.sysDeptService.search(sysDeptDTO, pageNum, pageSize));
+        } catch (Exception e) {
+            log.error("error:", e);
+            throw e;
         }
-
-        return CommonResultUtil.pagingSuccess("查询成功", pageInfo);
     }
 
 	/**
@@ -95,17 +79,16 @@ public class SysDeptController {
     public ResponseEntity<?> save(@RequestBody SysDeptDTO sysDeptDTO) {
         if(log.isInfoEnabled()) {
             log.info("save SysDept start...");
-        }
-		SysDept saveEntity = new SysDept();
-
-        BeanUtils.copyProperties(sysDeptDTO, saveEntity);
-		saveEntity.setCreateTime(new Date());
-		saveEntity.setUpdateTime(new Date());
-        if (this.sysDeptService.save(saveEntity) != 1) {
-            throw new CommonException(CommonCode.EXCEPTION, "新增失败!");
+			log.info("request param:{}", JSON.toJSONString(sysDeptDTO));
         }
 
-        return CommonResultUtil.success("新增成功", saveEntity);
+		try{
+            return CommonResultUtil.success("新增成功", this.sysDeptService.insert(sysDeptDTO));
+        } catch (Exception e) {
+            log.error("error:", e);
+            throw e;
+        }
+
     }
 
 	/**
@@ -117,16 +100,16 @@ public class SysDeptController {
     public ResponseEntity<?> update(@RequestBody SysDeptDTO sysDeptDTO) {
         if(log.isInfoEnabled()) {
             log.info("update SysDept start....");
-        }
-		SysDept updateEntity = new SysDept();
-
-        BeanUtils.copyProperties(sysDeptDTO, updateEntity);
-		updateEntity.setUpdateTime(new Date());
-        if(this.sysDeptService.updateById(updateEntity) != 1) {
-            throw new CommonException(CommonCode.EXCEPTION, "更新失败!");
+			log.info("request param:{}", JSON.toJSONString(sysDeptDTO));
         }
 
-        return CommonResultUtil.success("更新成功", updateEntity);
+		try{
+            return CommonResultUtil.success("更新成功", this.sysDeptService.update(sysDeptDTO));
+        } catch (Exception e) {
+            log.error("error:", e);
+            throw e;
+        }
+
     }
 
 	/**
@@ -139,11 +122,15 @@ public class SysDeptController {
     public ResponseEntity<?> remove(@PathVariable("id") Long id) {
         if(log.isInfoEnabled()) {
             log.info("remove SysDept by id start...");
-        }
-        if (this.sysDeptService.remove(id) != 1) {
-            throw new CommonException(CommonCode.EXCEPTION, "删除失败!");
+			log.info("request param:{}", id);
         }
 
-        return CommonResultUtil.success("删除成功");
+		try{
+            return CommonResultUtil.successMsg("删除成功");
+        } catch (Exception e) {
+            log.error("error:", e);
+            throw e;
+        }
+
     }
 }

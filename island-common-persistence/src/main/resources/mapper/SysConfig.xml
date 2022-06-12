@@ -3,21 +3,21 @@
 <mapper namespace="com.lkyl.island.common.ps.dao.SysConfigDao">
 
     <resultMap type="com.lkyl.island.common.ps.entity.SysConfig" id="SysConfigMap">
-        <result property="configId" column="config_id" jdbcType="INTEGER"/>
-        <result property="configName" column="config_name" jdbcType="VARCHAR"/>
-        <result property="configKey" column="config_key" jdbcType="VARCHAR"/>
-        <result property="configValue" column="config_value" jdbcType="VARCHAR"/>
-        <result property="configType" column="config_type" jdbcType="VARCHAR"/>
-        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-        <result property="tenantId" column="tenant_id" jdbcType="VARCHAR"/>
-        <result property="remark" column="remark" jdbcType="VARCHAR"/>
-        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
-        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
-        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
-    </resultMap>
+		        <result property="configId" column="config_id" jdbcType="INTEGER"/>
+		        <result property="configName" column="config_name" jdbcType="VARCHAR"/>
+		        <result property="configKey" column="config_key" jdbcType="VARCHAR"/>
+		        <result property="configValue" column="config_value" jdbcType="VARCHAR"/>
+		        <result property="configType" column="config_type" jdbcType="VARCHAR"/>
+		        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+		        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+		        <result property="tenantId" column="tenant_id" jdbcType="VARCHAR"/>
+		        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+		        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+		        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+		        <result property="delFlag" column="del_flag" jdbcType="VARCHAR"/>
+		    </resultMap>
 
-    <!--查询单个-->
+    <!--查询一条记录-->
     <select id="get" resultMap="SysConfigMap">
         select
           config_id, config_name, config_key, config_value, config_type, create_time, update_time, tenant_id, remark, create_user, update_user, del_flag
@@ -25,7 +25,7 @@
         where config_id = #{id}
     </select>
 
-    <!--查询指定行数据-->
+    <!--查询某一条记录-->
     <select id="getByParam" resultMap="SysConfigMap">
         select
           config_id, config_name, config_key, config_value, config_type, create_time, update_time, tenant_id, remark, create_user, update_user, del_flag
@@ -70,7 +70,7 @@
         </where>
     </select>
 
-	    <!--根据主键ID list 查询-->
+	<!--根据主键ID列表查询-->
     <select id="queryByIdList" parameterType="java.util.Map" resultMap="SysConfigMap">
         select
           config_id, config_name, config_key, config_value, config_type, create_time, update_time, tenant_id, remark, create_user, update_user, del_flag
@@ -121,7 +121,7 @@
         </where>
     </select>
 
-	    <!--查询列表据-->
+	<!--查询列表-->
     <select id="list" resultMap="SysConfigMap">
         select
           config_id, config_name, config_key, config_value, config_type, create_time, update_time, tenant_id, remark, create_user, update_user, del_flag
@@ -210,12 +210,13 @@
         </where>
     </select>
 
-    <!--新增所有列-->
+    <!--新增一条记录-->
     <insert id="save" >
         insert into sys_config(config_id, config_name, config_key, config_value, config_type, create_time, update_time, tenant_id, remark, create_user, update_user, del_flag)
         values (#{configId}, #{configName}, #{configKey}, #{configValue}, #{configType}, #{createTime}, #{updateTime}, #{tenantId}, #{remark}, #{createUser}, #{updateUser}, #{delFlag})
     </insert>
 
+	<!-- 批量新增 -->
     <insert id="batchSave">
         insert into sys_config(config_id, config_name, config_key, config_value, config_type, create_time, update_time, tenant_id, remark, create_user, update_user, del_flag)
         values
@@ -224,13 +225,14 @@
         </foreach>
     </insert>
 
+	<!-- 批量新增或更新 -->
     <insert id="saveOrUpdateBatch">
         insert into sys_config(config_id, config_name, config_key, config_value, config_type, create_time, update_time, tenant_id, remark, create_user, update_user, del_flag)
         values
         <foreach collection="entities" item="entity" separator=",">
             (#{entity.configId}, #{entity.configName}, #{entity.configKey}, #{entity.configValue}, #{entity.configType}, #{entity.createTime}, #{entity.updateTime}, #{entity.tenantId}, #{entity.remark}, #{entity.createUser}, #{entity.updateUser}, #{entity.delFlag})
         </foreach>
-        on duplicate key update
+        on duplicate (config_id) update
         config_id = values(config_id),
         config_name = values(config_name),
         config_key = values(config_key),
@@ -286,138 +288,145 @@
         where config_id = #{configId}
     </update>
 
-    <!--通过主键修改数据-->
+    <!--通过where条件，根据setter字段更新记录-->
     <update id="updateOnWhere">
         update sys_config
         <set>
             <if test="configName != null and configName != ''">
-                config_name = #{configName},
+                config_name = #{setter.configName},
             </if>
             <if test="configKey != null and configKey != ''">
-                config_key = #{configKey},
+                config_key = #{setter.configKey},
             </if>
             <if test="configValue != null and configValue != ''">
-                config_value = #{configValue},
+                config_value = #{setter.configValue},
             </if>
             <if test="configType != null and configType != ''">
-                config_type = #{configType},
+                config_type = #{setter.configType},
             </if>
             <if test="createTime != null">
-                create_time = #{createTime},
+                create_time = #{setter.createTime},
             </if>
             <if test="updateTime != null">
-                update_time = #{updateTime},
+                update_time = #{setter.updateTime},
             </if>
             <if test="tenantId != null and tenantId != ''">
-                tenant_id = #{tenantId},
+                tenant_id = #{setter.tenantId},
             </if>
             <if test="remark != null and remark != ''">
-                remark = #{remark},
+                remark = #{setter.remark},
             </if>
             <if test="createUser != null and createUser != ''">
-                create_user = #{createUser},
+                create_user = #{setter.createUser},
             </if>
             <if test="updateUser != null and updateUser != ''">
-                update_user = #{updateUser},
+                update_user = #{setter.updateUser},
             </if>
             <if test="delFlag != null and delFlag != ''">
-                del_flag = #{delFlag},
+                del_flag = #{setter.delFlag},
             </if>
         </set>
-                <where>
+        <where>
             <if test="configId != null">
-                and config_id = #{configId}
+                and config_id = #{where.configId}
             </if>
             <if test="configName != null and configName != ''">
-                and config_name = #{configName}
+                and config_name = #{where.configName}
             </if>
             <if test="configKey != null and configKey != ''">
-                and config_key = #{configKey}
+                and config_key = #{where.configKey}
             </if>
             <if test="configValue != null and configValue != ''">
-                and config_value = #{configValue}
+                and config_value = #{where.configValue}
             </if>
             <if test="configType != null and configType != ''">
-                and config_type = #{configType}
+                and config_type = #{where.configType}
             </if>
             <if test="createTime != null">
-                and create_time = #{createTime}
+                and create_time = #{where.createTime}
             </if>
             <if test="updateTime != null">
-                and update_time = #{updateTime}
+                and update_time = #{where.updateTime}
             </if>
             <if test="tenantId != null and tenantId != ''">
-                and tenant_id = #{tenantId}
+                and tenant_id = #{where.tenantId}
             </if>
             <if test="remark != null and remark != ''">
-                and remark = #{remark}
+                and remark = #{where.remark}
             </if>
             <if test="createUser != null and createUser != ''">
-                and create_user = #{createUser}
+                and create_user = #{where.createUser}
             </if>
             <if test="updateUser != null and updateUser != ''">
-                and update_user = #{updateUser}
+                and update_user = #{where.updateUser}
             </if>
             <if test="delFlag != null and delFlag != ''">
-                and del_flag = #{delFlag}
+                and del_flag = #{where.delFlag}
             </if>
         </where>
     </update>
 
-    <!--通过主键删除-->
-    <delete id="remove">
+    <!--通过主键物理删除-->
+    <delete id="removeById">
         delete from sys_config where config_id = #{configId}
     </delete>
 
-	<!--通过where删除-->
+	<!--通过where条件进行物理删除-->
     <delete id="removeOnWhere">
         delete from sys_config
-		                <where>
-            <if test="configId != null">
-                and config_id = #{configId}
-            </if>
-            <if test="configName != null and configName != ''">
-                and config_name = #{configName}
-            </if>
-            <if test="configKey != null and configKey != ''">
-                and config_key = #{configKey}
-            </if>
-            <if test="configValue != null and configValue != ''">
-                and config_value = #{configValue}
-            </if>
-            <if test="configType != null and configType != ''">
-                and config_type = #{configType}
-            </if>
-            <if test="createTime != null">
-                and create_time = #{createTime}
-            </if>
-            <if test="updateTime != null">
-                and update_time = #{updateTime}
-            </if>
-            <if test="tenantId != null and tenantId != ''">
-                and tenant_id = #{tenantId}
-            </if>
-            <if test="remark != null and remark != ''">
-                and remark = #{remark}
-            </if>
-            <if test="createUser != null and createUser != ''">
-                and create_user = #{createUser}
-            </if>
-            <if test="updateUser != null and updateUser != ''">
-                and update_user = #{updateUser}
-            </if>
-            <if test="delFlag != null and delFlag != ''">
-                and del_flag = #{delFlag}
-            </if>
+		<where>
+		<if test="configId != null">
+            and config_id = #{configId}
+        </if>
+		<if test="configName != null and configName != ''">
+            and config_name = #{configName}
+        </if>
+		<if test="configKey != null and configKey != ''">
+            and config_key = #{configKey}
+        </if>
+		<if test="configValue != null and configValue != ''">
+            and config_value = #{configValue}
+        </if>
+		<if test="configType != null and configType != ''">
+            and config_type = #{configType}
+        </if>
+		<if test="createTime != null">
+            and create_time = #{createTime}
+        </if>
+		<if test="updateTime != null">
+            and update_time = #{updateTime}
+        </if>
+		<if test="tenantId != null and tenantId != ''">
+            and tenant_id = #{tenantId}
+        </if>
+		<if test="remark != null and remark != ''">
+            and remark = #{remark}
+        </if>
+		<if test="createUser != null and createUser != ''">
+            and create_user = #{createUser}
+        </if>
+		<if test="updateUser != null and updateUser != ''">
+            and update_user = #{updateUser}
+        </if>
+		<if test="delFlag != null and delFlag != ''">
+            and del_flag = #{delFlag}
+        </if>
         </where>
     </delete>
-	<!-- 通过ID批量删除 -->
-	    <delete id="batchRemoveById">
+	<!-- 通过ID列表批量物理删除 -->
+	<delete id="batchRemoveById">
         DELETE FROM sys_config
         where config_id in
-		        <foreach item="id" collection="array" open="(" separator="," close=")">
-#{id}        </foreach>
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
     </delete>
+
+	<!--通过主键ID进行逻辑删除-->
+	<update id="logicRemoveById">
+		update sys_config set del_flag = '1' where config_id = #{configId}
+	</update>
+
 
 </mapper>
 

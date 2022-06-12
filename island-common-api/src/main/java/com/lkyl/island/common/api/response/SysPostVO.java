@@ -7,11 +7,17 @@ import java.util.Date;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * 岗位信息表(SysPost)响应实体VO
+ *
+ * @author author
+ * @since 2022-06-04 20:29:56
+ */
 @Data
 @ApiModel("岗位信息表响应体")
 @ToString
 public class SysPostVO implements Serializable {
-    private static final long serialVersionUID = 494346489247034519L;
+    private static final long serialVersionUID = 948781265438001190L;
          @ApiModelProperty("岗位ID")
          private Long postId;
          @ApiModelProperty("岗位编码")

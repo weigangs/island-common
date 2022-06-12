@@ -6,11 +6,18 @@ import lombok.ToString;
 import java.util.Date;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+/**
+ * 参数配置表(SysConfig)请求实体DTO
+ *
+ * @author author
+ * @since 2022-06-04 20:29:56
+ */
 @Data
 @ApiModel("参数配置表请求体")
 @ToString
 public class SysConfigDTO implements Serializable {
-    private static final long serialVersionUID = -73181337174889249L;
+    private static final long serialVersionUID = 292976757097749284L;
         @ApiModelProperty("参数主键")
         private Integer configId;
         @ApiModelProperty("参数名称")

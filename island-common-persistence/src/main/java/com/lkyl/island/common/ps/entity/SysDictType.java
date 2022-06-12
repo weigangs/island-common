@@ -6,10 +6,17 @@ import lombok.Data;
 import lombok.ToString;
 import java.util.Date;
 
+/**
+ * 字典类型表(SysDictType)实体类DO
+ *
+ * @author author
+ * @since 2022-06-04 20:29:56
+ */
+
 @Data
 @ToString
 public class SysDictType implements Serializable {
-    private static final long serialVersionUID = 525927415086750822L;
+    private static final long serialVersionUID = -86543144882495547L;
     /**
      * 字典主键
      */

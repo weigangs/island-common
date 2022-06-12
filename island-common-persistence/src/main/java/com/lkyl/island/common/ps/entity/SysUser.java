@@ -6,10 +6,17 @@ import lombok.Data;
 import lombok.ToString;
 import java.util.Date;
 
+/**
+ * 用户信息表(SysUser)实体类DO
+ *
+ * @author author
+ * @since 2022-06-04 20:29:56
+ */
+
 @Data
 @ToString
 public class SysUser implements Serializable {
-    private static final long serialVersionUID = -25184325061042310L;
+    private static final long serialVersionUID = 859540029893801953L;
     /**
      * 用户ID
      */

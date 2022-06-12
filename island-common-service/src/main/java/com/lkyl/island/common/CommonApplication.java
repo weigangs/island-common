@@ -17,7 +17,4 @@ public class CommonApplication {
         SpringApplication.run(CommonApplication.class, args);
         log.info("========>island-common-service started!");
     }
-
-
-
 }

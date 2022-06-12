@@ -5,43 +5,34 @@ import com.lkyl.island.common.api.response.SysMenuVO;
 import com.lkyl.island.common.api.response.SysUserVO;
 import com.lkyl.island.common.ps.entity.SysMenu;
 import com.lkyl.island.common.ps.entity.SysRoleMenu;
-import com.lkyl.island.common.ps.entity.SysUser;
-import com.lkyl.island.common.api.request.SysUserDTO;
 import com.lkyl.island.common.service.converter.SysMenuConverter;
-import com.lkyl.island.common.service.converter.SysUserConverter;
 import com.lkyl.island.common.service.service.SysMenuService;
 import com.lkyl.island.common.service.service.SysRoleMenuService;
-import com.lkyl.island.common.service.service.SysUserService;
 import com.lkyl.island.common.service.util.RoleUtil;
 import com.lkyl.oceanframework.common.utils.constant.CommonCode;
 import com.lkyl.oceanframework.common.utils.constant.CommonResult;
 import com.lkyl.oceanframework.common.utils.constant.MybatisConstant;
-import com.lkyl.oceanframework.common.utils.constant.PageConstant;
 import com.lkyl.oceanframework.common.utils.enums.DelFlagEnum;
 import com.lkyl.oceanframework.common.utils.exception.CommonException;
 import com.lkyl.oceanframework.common.utils.utils.CollectionUtils;
 import com.lkyl.oceanframework.security.security.OceanUserPrincipal;
+import com.lkyl.oceanframework.web.util.BusinessContextUtil;
 import com.lkyl.oceanframework.web.util.CommonResultUtil;
-import com.lkyl.oceanframework.common.utils.utils.PageUtil;
-import com.lkyl.oceanframework.web.util.ContextUtil;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.http.*;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
-import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.security.Principal;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 用户信息表(SysUser)表控制层
@@ -100,16 +91,16 @@ public class SysLoginController {
         if(RoleUtil.isAdmin()) {
             menus = sysMenuService.list(new SysMenu());
         }else {
-            Map<String, Object> roleMenuMapQuery = new HashMap<>();
+            Map<String, Object> roleMenuMapQuery = new HashMap<>(16);
             List<Long> roleList = new ArrayList<>();
             if (CollectionUtils.isNotEmpty(roleList)) {
                 roleMenuMapQuery.put(MybatisConstant.ID_LIST, roleList);
-                roleMenuMapQuery.put(MybatisConstant.TENANT_ID, ContextUtil.getTenantId());
+                roleMenuMapQuery.put(MybatisConstant.TENANT_ID, BusinessContextUtil.getTenantId());
                 List<SysRoleMenu> roleMenuList = sysRoleMenuService.queryByIdList(roleMenuMapQuery);
                 if(CollectionUtils.isNotEmpty(roleList)) {
-                    Map<String, Object> menuMapQuery = new HashMap<>();
+                    Map<String, Object> menuMapQuery = new HashMap<>(16);
                     menuMapQuery.put(MybatisConstant.ID_LIST, roleMenuList.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList()));
-                    menuMapQuery.put(MybatisConstant.TENANT_ID, ContextUtil.getTenantId());
+                    menuMapQuery.put(MybatisConstant.TENANT_ID, BusinessContextUtil.getTenantId());
                     menuMapQuery.put(MybatisConstant.DEL_FLAG, DelFlagEnum.NO.getCode());
                     menus = sysMenuService.queryByIdList(menuMapQuery);
                 }
@@ -117,7 +108,7 @@ public class SysLoginController {
         }
 
         List<SysMenuVO> viewList = SysMenuConverter.INSTANCE.to(menus);
-        List<RouterVO> routerVOS = sysMenuService.buildMenus(sysMenuService.getChildPerms(viewList, 0));
-        return CommonResultUtil.success(routerVOS);
+        List<RouterVO> routerVos = sysMenuService.buildMenus(sysMenuService.getChildPerms(viewList, 0));
+        return CommonResultUtil.success(routerVos);
     }
 }

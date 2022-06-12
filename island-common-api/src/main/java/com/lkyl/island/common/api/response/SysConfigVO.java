@@ -7,11 +7,17 @@ import java.util.Date;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * 参数配置表(SysConfig)响应实体VO
+ *
+ * @author author
+ * @since 2022-06-04 20:29:56
+ */
 @Data
 @ApiModel("参数配置表响应体")
 @ToString
 public class SysConfigVO implements Serializable {
-    private static final long serialVersionUID = -39124774719658938L;
+    private static final long serialVersionUID = 583017690528641504L;
          @ApiModelProperty("参数主键")
          private Integer configId;
          @ApiModelProperty("参数名称")

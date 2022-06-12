@@ -4,16 +4,20 @@ import java.io.Serializable;
 import lombok.Data;
 import lombok.ToString;
 import java.util.Date;
-import java.util.List;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * 部门表(SysDept)响应实体VO
+ *
+ * @author author
+ * @since 2022-06-04 20:29:56
+ */
 @Data
 @ApiModel("部门表响应体")
 @ToString
 public class SysDeptVO implements Serializable {
-    private static final long serialVersionUID = 361446688669097213L;
+    private static final long serialVersionUID = -96543981457757047L;
          @ApiModelProperty("部门id")
          private Long deptId;
          @ApiModelProperty("父部门id")
@@ -44,8 +48,6 @@ public class SysDeptVO implements Serializable {
          private String createUser;
          @ApiModelProperty("更新者")
          private String updateUser;
-     @ApiModelProperty("子部门列表")
-     private List<SysDeptVO> childList;
 
 
 }

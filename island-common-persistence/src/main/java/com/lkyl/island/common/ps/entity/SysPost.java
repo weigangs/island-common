@@ -6,10 +6,17 @@ import lombok.Data;
 import lombok.ToString;
 import java.util.Date;
 
+/**
+ * 岗位信息表(SysPost)实体类DO
+ *
+ * @author author
+ * @since 2022-06-04 20:29:56
+ */
+
 @Data
 @ToString
 public class SysPost implements Serializable {
-    private static final long serialVersionUID = 944810284002026075L;
+    private static final long serialVersionUID = -84404577836627475L;
     /**
      * 岗位ID
      */

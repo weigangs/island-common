@@ -7,11 +7,17 @@ import java.util.Date;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * 角色信息表(SysRole)响应实体VO
+ *
+ * @author author
+ * @since 2022-06-04 20:29:56
+ */
 @Data
 @ApiModel("角色信息表响应体")
 @ToString
 public class SysRoleVO implements Serializable {
-    private static final long serialVersionUID = 921661089957309684L;
+    private static final long serialVersionUID = -36628282553789285L;
          @ApiModelProperty("角色ID")
          private Long roleId;
          @ApiModelProperty("角色名称")

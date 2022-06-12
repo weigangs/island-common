@@ -6,11 +6,18 @@ import lombok.ToString;
 import java.util.Date;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+/**
+ * 菜单权限表(SysMenu)请求实体DTO
+ *
+ * @author author
+ * @since 2022-06-04 20:29:56
+ */
 @Data
 @ApiModel("菜单权限表请求体")
 @ToString
 public class SysMenuDTO implements Serializable {
-    private static final long serialVersionUID = 627428595435760232L;
+    private static final long serialVersionUID = 239759664696176298L;
         @ApiModelProperty("菜单ID")
         private Long menuId;
         @ApiModelProperty("菜单名称")
