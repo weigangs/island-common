@@ -4,6 +4,8 @@ import java.io.Serializable;
 import lombok.Data;
 import lombok.ToString;
 import java.util.Date;
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -58,6 +60,7 @@ public class SysMenuVO implements Serializable {
          private String updateUser;
          @ApiModelProperty("删除标识")
          private String delFlag;
+         private List<SysMenuVO> childList;
 
 
 }

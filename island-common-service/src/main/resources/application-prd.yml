@@ -11,9 +11,9 @@ spring:
     encoding: UTF-8
   redis:
     database: 0
-    host: 127.0.0.1
+    host: ENC(DgNJ/rEVHE7A8euVlYrdY5uOm+c00BKk)
     port: 6379
-    #    password: #zjmzxfzhl
+    password: ENC(2Bs9KYviUwfy2LMcWtXWhsFTnv3T3v2q)
     lettuce:
       pool:
         #最大连接数

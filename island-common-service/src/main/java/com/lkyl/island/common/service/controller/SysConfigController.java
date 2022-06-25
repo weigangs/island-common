@@ -1,11 +1,11 @@
 package com.lkyl.island.common.service.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.lkyl.island.common.api.request.SysConfigDTO;
 import com.lkyl.island.common.service.service.SysConfigService;
 import com.lkyl.oceanframework.web.util.CommonResultUtil;
 import lombok.extern.slf4j.Slf4j;
-import com.alibaba.fastjson.JSON;
-import org.springframework.http.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * 参数配置表(SysConfig)表控制层
  *
  * @author author
- * @since 2022-06-12 15:54:06
+ * @since 2022-06-12 16:57:57
  */
 @Slf4j
 @RestController
@@ -126,6 +126,7 @@ public class SysConfigController {
         }
 
 		try{
+			this.sysConfigService.remove(id);
             return CommonResultUtil.successMsg("删除成功");
         } catch (Exception e) {
             log.error("error:", e);

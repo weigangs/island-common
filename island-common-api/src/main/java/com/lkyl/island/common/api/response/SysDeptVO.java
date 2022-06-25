@@ -4,6 +4,8 @@ import java.io.Serializable;
 import lombok.Data;
 import lombok.ToString;
 import java.util.Date;
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -48,6 +50,7 @@ public class SysDeptVO implements Serializable {
          private String createUser;
          @ApiModelProperty("更新者")
          private String updateUser;
+         private List<SysDeptVO> childList;
 
 
 }
