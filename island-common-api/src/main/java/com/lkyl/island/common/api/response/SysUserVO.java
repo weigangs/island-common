@@ -4,14 +4,22 @@ import java.io.Serializable;
 import lombok.Data;
 import lombok.ToString;
 import java.util.Date;
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+/**
+ * 用户信息表(SysUser)响应实体VO
+ *
+ * @author author
+ * @since 2022-06-04 20:29:56
+ */
 @Data
 @ApiModel("用户信息表响应体")
 @ToString
 public class SysUserVO implements Serializable {
-    private static final long serialVersionUID = 320037509200810147L;
+    private static final long serialVersionUID = -56673766171624768L;
          @ApiModelProperty("用户ID")
          private Long userId;
          @ApiModelProperty("部门ID")
@@ -34,23 +42,26 @@ public class SysUserVO implements Serializable {
          private String password;
          @ApiModelProperty("帐号状态（0正常 1停用）")
          private String status;
-         @ApiModelProperty("删除标志（0代表存在 2代表删除）")
+         @ApiModelProperty("删除标识")
          private String delFlag;
          @ApiModelProperty("最后登录IP")
          private String loginIp;
          @ApiModelProperty("最后登录时间")
          private Date loginDate;
-         @ApiModelProperty("创建者")
-         private String createBy;
          @ApiModelProperty("创建时间")
          private Date createTime;
-         @ApiModelProperty("更新者")
-         private String updateBy;
          @ApiModelProperty("更新时间")
          private Date updateTime;
          @ApiModelProperty("备注")
          private String remark;
-
+         @ApiModelProperty("租户")
+         private String tenantId;
+         @ApiModelProperty("创建者")
+         private String createUser;
+         @ApiModelProperty("更新者")
+         private String updateUser;
+         @ApiModelProperty("角色列表")
+         private List<String> roles;
 
 }
 

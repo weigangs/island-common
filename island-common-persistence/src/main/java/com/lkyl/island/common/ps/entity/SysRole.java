@@ -6,10 +6,17 @@ import lombok.Data;
 import lombok.ToString;
 import java.util.Date;
 
+/**
+ * 角色信息表(SysRole)实体类DO
+ *
+ * @author author
+ * @since 2022-06-04 20:29:56
+ */
+
 @Data
 @ToString
 public class SysRole implements Serializable {
-    private static final long serialVersionUID = -25850069444894347L;
+    private static final long serialVersionUID = -85439893837344353L;
     /**
      * 角色ID
      */
@@ -43,29 +50,33 @@ public class SysRole implements Serializable {
      */
     private String status;
     /**
-     * 删除标志（0代表存在 2代表删除）
+     * 删除标识
      */
     private String delFlag;
-    /**
-     * 创建者
-     */
-    private String createBy;
     /**
      * 创建时间
      */
     private Date createTime;
     /**
-     * 更新者
-     */
-    private String updateBy;
-    /**
      * 更新时间
      */
     private Date updateTime;
     /**
+     * 租户
+     */
+    private String tenantId;
+    /**
      * 备注
      */
     private String remark;
+    /**
+     * 创建者
+     */
+    private String createUser;
+    /**
+     * 更新者
+     */
+    private String updateUser;
 
 
 }

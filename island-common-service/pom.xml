@@ -26,12 +26,12 @@
         </dependency>-->
 
         <dependency>
-            <groupId>com.lkyl.oceanFramework.boot</groupId>
+            <groupId>com.lkyl.oceanframework.boot</groupId>
             <artifactId>oceanboot-starter</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.lkyl.oceanFramework</groupId>
+            <groupId>com.lkyl.oceanframework</groupId>
             <artifactId>ocean-web</artifactId>
         </dependency>
 
@@ -54,7 +54,7 @@
         </dependency>
 
             <dependency>
-        <groupId>com.lkyl.oceanFramework</groupId>
+        <groupId>com.lkyl.oceanframework</groupId>
         <artifactId>ocean-security</artifactId>
     </dependency>
         <dependency>
@@ -70,25 +70,82 @@
         </dependency>
 
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <groupId>com.lkyl.oceanframework</groupId>
+            <artifactId>ocean-log</artifactId>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <!--<plugin>-->
+                <!--<groupId>org.springframework.boot</groupId>-->
+                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+                <!--<version>2.6.3</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>repackage</id>-->
+                        <!--<goals>-->
+                            <!--<goal>repackage</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.6.3</version>
+                <executions>
+                    <execution>
+                        <id>repackage</id>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--自定义打包 -->
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>${project.artifactId}</finalName>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <descriptors>
+                                <descriptor>assembly/assembly-descriptor.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <delimiters>@</delimiters>
+                    <useDefaultDelimiters>false</useDefaultDelimiters>
+                </configuration>
             </plugin>
 
         </plugins>
+
+
 
     </build>
 </project>

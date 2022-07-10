@@ -7,8 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 /**
  * 菜单权限表(SysMenu)表数据库访问层
  *
- * @author shiwg
- * @since 2022-02-17 12:12:30
+ * @author author
+ * @since 2022-05-21 16:24:30
  */
  @Mapper
 public interface SysMenuDao extends BaseDao<SysMenu, Long>{

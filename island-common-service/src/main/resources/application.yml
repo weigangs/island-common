@@ -1,5 +1,7 @@
 server:
   port: 8001
+  servlet:
+    context-path: /island/common
 
 spring:
   application:
@@ -11,8 +13,10 @@ spring:
   jackson:
     serialization:
       indent-output: true
-
-
-jvm_opts: -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=128m -Xms128m -Xmx128m -Xmn64m -Xss256k -XX:SurvivorRatio=8 -XX:+UseConcMarkSweepGC
+  swagger:
+    basePackage: com.lkyl.island.common.service.controller
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
 
 

@@ -1,31 +1,20 @@
 package com.lkyl.island.common.service.controller;
 
-import com.lkyl.island.common.ps.entity.SysUserRole;
 import com.lkyl.island.common.api.request.SysUserRoleDTO;
-import com.lkyl.island.common.ps.service.SysUserRoleService;
-import com.lkyl.oceanframework.common.utils.constant.CommonCode;
-import com.lkyl.oceanframework.common.utils.constant.CommonResult;
-import com.lkyl.oceanframework.common.utils.constant.PageConstant;
-import com.lkyl.oceanframework.common.utils.constant.PaginatedResult;
-import com.lkyl.oceanframework.common.utils.exception.CommonException;
-import com.lkyl.oceanframework.common.utils.utils.PageUtil;
-import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
-import org.springframework.beans.BeanUtils;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.lkyl.island.common.service.service.SysUserRoleService;
+import com.lkyl.oceanframework.web.util.CommonResultUtil;
 import lombok.extern.slf4j.Slf4j;
-
+import com.alibaba.fastjson.JSON;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import java.util.*;
 
 import javax.annotation.Resource;
 
 /**
  * 用户和角色关联表(SysUserRole)表控制层
  *
- * @author shiwg
- * @since 2022-02-17 15:05:49
+ * @author author
+ * @since 2022-06-12 15:54:07
  */
 @Slf4j
 @RestController
@@ -33,65 +22,55 @@ import javax.annotation.Resource;
 public class SysUserRoleController {
     /**
      * 服务对象
-     */
+    */
     @Resource
     private SysUserRoleService sysUserRoleService;
 
-	    /**
+	/**
      * 根据主键ID查询
      *
      * @param id
      * @return 查询结果
-     */
-	    @GetMapping("/getById/{id}")
+    */
+	@GetMapping("/getById/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") Long id) {
-        log.info("get SysParam info from token start...");
-        Optional<SysUserRole> sysUserRole = this.sysUserRoleService.get(id);
-
-        if(null == sysUserRole){
-            throw new CommonException(CommonCode.EXCEPTION, "返回对象为NULL!");
+		if(log.isInfoEnabled()) {
+            log.info("get SysUserRole info start...");
+			log.info("request param:{}", id);
         }
-        return ResponseEntity.ok(new CommonResult().
-        setCode(CommonCode.SUCCESS).
-        setMsg("获取成功").
-        setData(sysUserRole));
+
+        try{
+            return CommonResultUtil.success("获取成功", this.sysUserRoleService.detail(id));
+        } catch (Exception e) {
+            log.error("error:", e);
+            throw e;
+        }
     }
 
-
-	    /**
+	/**
      * 分页查询
      *
      * @param sysUserRoleDTO 筛选条件
      * @return 查询结果
      */
 	@PostMapping("/search")
-    public ResponseEntity<?> search(@RequestParam(value = "page", required = false, defaultValue = "1") String pageString,
-                            @RequestParam(value = "per_page", required = false, defaultValue = "10") String perPageString,
+    public ResponseEntity<?> search(@RequestParam(value = "pageNum", required = false, defaultValue = "1") String pageNum,
+                            @RequestParam(value = "pageSize", required = false, defaultValue = "10") String pageSize,
                             @RequestBody(required = false) SysUserRoleDTO sysUserRoleDTO) {
         if(log.isInfoEnabled()) {
             log.info("search SysUserRole start...");
+			log.info("request param:{}", JSON.toJSONString(sysUserRoleDTO));
         }
 
-        int page = PageUtil.parsePage(pageString, PageConstant.PAGE);
-        int perPage = PageUtil.parsePerPage(perPageString, PageConstant.PER_PAGE);
-        PageHelper.startPage(page, perPage);
-		//PageHelper.startPage(page, perPage, "update_time desc");
-		SysUserRole queryEntity = new SysUserRole();
-        BeanUtils.copyProperties(sysUserRoleDTO, queryEntity);
-        List<SysUserRole> sysUserRoleList = this.sysUserRoleService.list(queryEntity);
-        PageInfo<SysUserRole> pageInfo = new PageInfo<>(sysUserRoleList);
-        return ResponseEntity.ok(new PaginatedResult()
-                .setCode(CommonCode.SUCCESS)
-                .setMsg("查询成功")
-                .setData(pageInfo.getList())
-                .setCurrentPage(pageInfo.getPageNum())
-                .setTotalPage(pageInfo.getPages())
-                .setTotalCount(pageInfo.getTotal()));
-
+		try{
+            return CommonResultUtil.pagingSuccess("查询成功", this.sysUserRoleService.search(sysUserRoleDTO, pageNum, pageSize));
+        } catch (Exception e) {
+            log.error("error:", e);
+            throw e;
+        }
     }
 
-
-	    /**
+	/**
      * 新增
      * @param sysUserRoleDTO
      * @return
@@ -100,19 +79,19 @@ public class SysUserRoleController {
     public ResponseEntity<?> save(@RequestBody SysUserRoleDTO sysUserRoleDTO) {
         if(log.isInfoEnabled()) {
             log.info("save SysUserRole start...");
+			log.info("request param:{}", JSON.toJSONString(sysUserRoleDTO));
         }
-		SysUserRole saveEntity = new SysUserRole();
-        BeanUtils.copyProperties(sysUserRoleDTO, saveEntity);
-        if (this.sysUserRoleService.save(saveEntity) != 1) {
-            throw new CommonException(CommonCode.EXCEPTION, "新增失败!");
+
+		try{
+            return CommonResultUtil.success("新增成功", this.sysUserRoleService.insert(sysUserRoleDTO));
+        } catch (Exception e) {
+            log.error("error:", e);
+            throw e;
         }
-        return ResponseEntity.ok(new CommonResult()
-                .setCode(CommonCode.SUCCESS)
-                .setMsg("新增成功")
-                .setData(saveEntity));
+
     }
 
-	    /**
+	/**
      * 修改
      * @param sysUserRoleDTO
      * @return
@@ -121,19 +100,19 @@ public class SysUserRoleController {
     public ResponseEntity<?> update(@RequestBody SysUserRoleDTO sysUserRoleDTO) {
         if(log.isInfoEnabled()) {
             log.info("update SysUserRole start....");
+			log.info("request param:{}", JSON.toJSONString(sysUserRoleDTO));
         }
-		SysUserRole updateEntity = new SysUserRole();
-        BeanUtils.copyProperties(sysUserRoleDTO, updateEntity);
-        if(this.sysUserRoleService.updateById(updateEntity) != 1) {
-            throw new CommonException(CommonCode.EXCEPTION, "更新失败!");
+
+		try{
+            return CommonResultUtil.success("更新成功", this.sysUserRoleService.update(sysUserRoleDTO));
+        } catch (Exception e) {
+            log.error("error:", e);
+            throw e;
         }
-        return ResponseEntity.ok(new CommonResult()
-                .setCode(CommonCode.SUCCESS)
-                .setMsg("更新成功")
-                .setData(updateEntity));
+
     }
 
-	 /**
+	/**
      * 根据ID删除
      *
      * @param id
@@ -143,21 +122,15 @@ public class SysUserRoleController {
     public ResponseEntity<?> remove(@PathVariable("id") Long id) {
         if(log.isInfoEnabled()) {
             log.info("remove SysUserRole by id start...");
+			log.info("request param:{}", id);
         }
-        if (this.sysUserRoleService.remove(id) != 1) {
-            throw new CommonException(CommonCode.EXCEPTION, "删除失败!");
+
+		try{
+            return CommonResultUtil.successMsg("删除成功");
+        } catch (Exception e) {
+            log.error("error:", e);
+            throw e;
         }
-        return ResponseEntity.ok(new CommonResult()
-        .setCode(CommonCode.SUCCESS)
-        .setMsg("删除成功"));
-    }
 
-    public static void main(String []args){
-        StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
-        encryptor.setAlgorithm("PBEWITHHMACSHA512ANDAES_256");
-        encryptor.setPassword("BdaObXaELXX");
-        System.out.println(encryptor.encrypt("root"));
     }
-
 }
-

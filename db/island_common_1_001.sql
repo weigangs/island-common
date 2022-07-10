@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS `gen_table`;
 create table gen_table
 (
   table_id          bigint auto_increment comment '编号'
@@ -24,6 +25,7 @@ create table gen_table
 )
   comment '代码生成业务表';
 
+DROP TABLE IF EXISTS `gen_table_column`;
 create table gen_table_column
 (
   column_id      bigint auto_increment comment '编号'
@@ -48,10 +50,12 @@ create table gen_table_column
   create_by      varchar(64)  default ''   null comment '创建者',
   create_time    datetime                  null comment '创建时间',
   update_by      varchar(64)  default ''   null comment '更新者',
-  update_time    datetime                  null comment '更新时间'
+  update_time    datetime                  null comment '更新时间',
+  tenant_id    varchar(12)  default ''  null comment '租户'
 )
   comment '代码生成业务表字段';
 
+DROP TABLE IF EXISTS `oauth_client_details`;
 create table oauth_client_details
 (
   client_id               varchar(48)   not null
@@ -68,6 +72,7 @@ create table oauth_client_details
   autoapprove             varchar(256)  null
 );
 
+DROP TABLE IF EXISTS `sys_config`;
 create table sys_config
 (
   config_id    int(5) auto_increment comment '参数主键'
@@ -80,10 +85,12 @@ create table sys_config
   create_time  datetime                 null comment '创建时间',
   update_by    varchar(64)  default ''  null comment '更新者',
   update_time  datetime                 null comment '更新时间',
+  tenant_id    varchar(12)  default ''  null comment '租户',
   remark       varchar(500)             null comment '备注'
 )
   comment '参数配置表';
 
+DROP TABLE IF EXISTS `sys_dept`;
 create table sys_dept
 (
   dept_id     bigint auto_increment comment '部门id'
@@ -100,10 +107,12 @@ create table sys_dept
   create_by   varchar(64) default ''  null comment '创建者',
   create_time datetime                null comment '创建时间',
   update_by   varchar(64) default ''  null comment '更新者',
-  update_time datetime                null comment '更新时间'
+  update_time datetime                null comment '更新时间',
+  tenant_id    varchar(12)  default ''  null comment '租户'
 )
   comment '部门表';
 
+DROP TABLE IF EXISTS `sys_dict_data`;
 create table sys_dict_data
 (
   dict_code   bigint auto_increment comment '字典编码'
@@ -120,10 +129,12 @@ create table sys_dict_data
   create_time datetime                 null comment '创建时间',
   update_by   varchar(64)  default ''  null comment '更新者',
   update_time datetime                 null comment '更新时间',
+  tenant_id    varchar(12)  default ''  null comment '租户',
   remark      varchar(500)             null comment '备注'
 )
   comment '字典数据表';
 
+DROP TABLE IF EXISTS `sys_dict_type`;
 create table sys_dict_type
 (
   dict_id     bigint auto_increment comment '字典主键'
@@ -135,12 +146,14 @@ create table sys_dict_type
   create_time datetime                 null comment '创建时间',
   update_by   varchar(64)  default ''  null comment '更新者',
   update_time datetime                 null comment '更新时间',
+  tenant_id    varchar(12)  default ''  null comment '租户',
   remark      varchar(500)             null comment '备注',
   constraint dict_type
     unique (dict_type)
 )
   comment '字典类型表';
 
+DROP TABLE IF EXISTS `sys_job`;
 create table sys_job
 (
   job_id          bigint auto_increment comment '任务ID',
@@ -155,11 +168,13 @@ create table sys_job
   create_time     datetime                       null comment '创建时间',
   update_by       varchar(64)  default ''        null comment '更新者',
   update_time     datetime                       null comment '更新时间',
+  tenant_id       varchar(12)  default ''  null comment '租户',
   remark          varchar(500) default ''        null comment '备注信息',
   primary key (job_id, job_name, job_group)
 )
   comment '定时任务调度表';
 
+DROP TABLE IF EXISTS `sys_job_log`;
 create table sys_job_log
 (
   job_log_id     bigint auto_increment comment '任务日志ID'
@@ -170,10 +185,12 @@ create table sys_job_log
   job_message    varchar(500)              null comment '日志信息',
   status         char          default '0' null comment '执行状态（0正常 1失败）',
   exception_info varchar(2000) default ''  null comment '异常信息',
-  create_time    datetime                  null comment '创建时间'
+  create_time    datetime                  null comment '创建时间',
+    tenant_id       varchar(12)  default ''  null comment '租户'
 )
   comment '定时任务调度日志表';
 
+DROP TABLE IF EXISTS `sys_logininfor`;
 create table sys_logininfor
 (
   info_id        bigint auto_increment comment '访问ID'
@@ -185,10 +202,12 @@ create table sys_logininfor
   os             varchar(50)  default ''  null comment '操作系统',
   status         char         default '0' null comment '登录状态（0成功 1失败）',
   msg            varchar(255) default ''  null comment '提示消息',
-  login_time     datetime                 null comment '访问时间'
+  login_time     datetime                 null comment '访问时间',
+  tenant_id       varchar(12)  default ''  null comment '租户'
 )
   comment '系统访问记录';
 
+DROP TABLE IF EXISTS `sys_menu`;
 create table sys_menu
 (
   menu_id     bigint auto_increment comment '菜单ID'
@@ -209,10 +228,12 @@ create table sys_menu
   create_time datetime                 null comment '创建时间',
   update_by   varchar(64)  default ''  null comment '更新者',
   update_time datetime                 null comment '更新时间',
+  tenant_id       varchar(12)  default ''  null comment '租户',
   remark      varchar(500) default ''  null comment '备注'
 )
   comment '菜单权限表';
 
+DROP TABLE IF EXISTS `sys_notice`;
 create table sys_notice
 (
   notice_id      int(4) auto_increment comment '公告ID'
@@ -225,10 +246,12 @@ create table sys_notice
   create_time    datetime                null comment '创建时间',
   update_by      varchar(64) default ''  null comment '更新者',
   update_time    datetime                null comment '更新时间',
+  tenant_id       varchar(12)  default ''  null comment '租户',
   remark         varchar(255)            null comment '备注'
 )
   comment '通知公告表';
 
+DROP TABLE IF EXISTS `sys_oper_log`;
 create table sys_oper_log
 (
   oper_id        bigint auto_increment comment '日志主键'
@@ -247,10 +270,12 @@ create table sys_oper_log
   json_result    varchar(2000) default '' null comment '返回参数',
   status         int(1)        default 0  null comment '操作状态（0正常 1异常）',
   error_msg      varchar(2000) default '' null comment '错误消息',
-  oper_time      datetime                 null comment '操作时间'
+  oper_time      datetime                 null comment '操作时间',
+    tenant_id       varchar(12)  default ''  null comment '租户'
 )
   comment '操作日志记录';
 
+DROP TABLE IF EXISTS `sys_post`;
 create table sys_post
 (
   post_id     bigint auto_increment comment '岗位ID'
@@ -263,10 +288,12 @@ create table sys_post
   create_time datetime               null comment '创建时间',
   update_by   varchar(64) default '' null comment '更新者',
   update_time datetime               null comment '更新时间',
+      tenant_id       varchar(12)  default ''  null comment '租户',
   remark      varchar(500)           null comment '备注'
 )
   comment '岗位信息表';
 
+DROP TABLE IF EXISTS `sys_role`;
 create table sys_role
 (
   role_id             bigint auto_increment comment '角色ID'
@@ -283,26 +310,32 @@ create table sys_role
   create_time         datetime                null comment '创建时间',
   update_by           varchar(64) default ''  null comment '更新者',
   update_time         datetime                null comment '更新时间',
+        tenant_id       varchar(12)  default ''  null comment '租户',
   remark              varchar(500)            null comment '备注'
 )
   comment '角色信息表';
 
+DROP TABLE IF EXISTS `sys_role_dept`;
 create table sys_role_dept
 (
   role_id bigint not null comment '角色ID',
   dept_id bigint not null comment '部门ID',
+          tenant_id       varchar(12)  default ''  null comment '租户'
   primary key (role_id, dept_id)
 )
   comment '角色和部门关联表';
 
+DROP TABLE IF EXISTS `sys_role_menu`;
 create table sys_role_menu
 (
   role_id bigint not null comment '角色ID',
   menu_id bigint not null comment '菜单ID',
+          tenant_id       varchar(12)  default ''  null comment '租户',
   primary key (role_id, menu_id)
 )
   comment '角色和菜单关联表';
 
+DROP TABLE IF EXISTS `sys_user`;
 create table sys_user
 (
   user_id     bigint auto_increment comment '用户ID'
@@ -324,22 +357,27 @@ create table sys_user
   create_time datetime                  null comment '创建时间',
   update_by   varchar(64)  default ''   null comment '更新者',
   update_time datetime                  null comment '更新时间',
+  tenant_id       varchar(12)  default ''  null comment '租户',
   remark      varchar(500)              null comment '备注'
 )
   comment '用户信息表';
 
+DROP TABLE IF EXISTS `sys_user_post`;
 create table sys_user_post
 (
   user_id bigint not null comment '用户ID',
   post_id bigint not null comment '岗位ID',
+  tenant_id       varchar(12)  default ''  null comment '租户',
   primary key (user_id, post_id)
 )
   comment '用户与岗位关联表';
 
+DROP TABLE IF EXISTS `sys_user_role`;
 create table sys_user_role
 (
   user_id bigint not null comment '用户ID',
   role_id bigint not null comment '角色ID',
+  tenant_id       varchar(12)  default ''  null comment '租户',
   primary key (user_id, role_id)
 )
   comment '用户和角色关联表';
