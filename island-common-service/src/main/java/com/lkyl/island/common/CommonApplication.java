@@ -1,5 +1,6 @@
 package com.lkyl.island.common;
 
+import com.lkyl.oceanframework.log.annotation.EnableLogRecord;
 import com.lkyl.oceanframework.mybatis.annotation.EnableOceanMybatis;
 import com.lkyl.oceanframework.security.annotation.OceanOauth2Server;
 import com.lkyl.oceanframework.web.annotation.EnableOceanWeb;
@@ -12,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableOceanMybatis
 @EnableOceanWeb
 @SpringBootApplication
+@EnableLogRecord(tenantId = "dev")
 public class CommonApplication {
     public static void main(String[] args) {
         SpringApplication.run(CommonApplication.class, args);

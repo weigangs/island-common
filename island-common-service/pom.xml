@@ -73,6 +73,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.lkyl.oceanframework</groupId>
+            <artifactId>ocean-log</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

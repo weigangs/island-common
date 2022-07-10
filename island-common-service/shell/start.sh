@@ -1,5 +1,5 @@
 #!/bin/bash
-PRING_PROFILE=""
+PRING_PROFILE="dev"
 profile=$1
 BASE_DIR=`cd $(dirname $0);pwd -P`
 JAR_NAME=island-common-service-1.0.1.jar

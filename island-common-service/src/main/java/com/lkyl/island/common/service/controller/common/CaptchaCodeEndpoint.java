@@ -3,11 +3,8 @@ package com.lkyl.island.common.service.controller.common;
 import com.lkyl.oceanframework.common.utils.constant.CommonCode;
 import com.lkyl.oceanframework.common.utils.constant.CommonResult;
 import com.lkyl.oceanframework.common.utils.exception.CommonException;
-import com.lkyl.oceanframework.common.utils.utils.Base64;
-import com.lkyl.oceanframework.common.utils.utils.RSAUtil;
 import com.lkyl.oceanframework.common.utils.utils.VerifyCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.provider.endpoint.FrameworkEndpoint;
 import org.springframework.util.FastByteArrayOutputStream;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,7 +45,7 @@ public class CaptchaCodeEndpoint {
         }
 
         //用流传输
-        return ResponseEntity.ok(new CommonResult().setCode(CommonCode.SUCCESS).setMsg(CommonCode.SUCCESS_MSG).setData(Base64.encode(os.toByteArray())));
+        return ResponseEntity.ok(new CommonResult().setCode(CommonCode.SUCCESS).setMsg(CommonCode.SUCCESS_MSG).setData(org.apache.commons.codec.binary.Base64.encodeBase64(os.toByteArray())));
 
     }
 }
