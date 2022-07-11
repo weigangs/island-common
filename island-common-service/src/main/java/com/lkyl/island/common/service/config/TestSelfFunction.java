@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * @createTime: 2022年07月10日 16:31
  */
 @Component
-public class TestSelfFunction implements IParseFunction {
+public class TestSelfFunction implements IParseFunction<String> {
     @Override
     public String functionName() {
         return "firstTest";
