@@ -1,6 +1,9 @@
 package com.lkyl.island.common.api.response;
 
 import java.io.Serializable;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import lombok.ToString;
 import java.util.Date;
@@ -19,6 +22,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class SysUserRoleVO implements Serializable {
     private static final long serialVersionUID = -76750135583317314L;
          @ApiModelProperty("用户ID")
+         @JsonSerialize(using = ToStringSerializer.class)
          private Long userId;
          @ApiModelProperty("角色ID")
          private Long roleId;

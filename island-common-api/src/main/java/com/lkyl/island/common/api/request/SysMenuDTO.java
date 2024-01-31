@@ -37,27 +37,11 @@ public class SysMenuDTO implements Serializable {
         @ApiModelProperty("菜单类型（M目录 C菜单 F按钮）")
         private String menuType;
         @ApiModelProperty("菜单状态（0显示 1隐藏）")
-        private String visible;
+        private String isVisible;
         @ApiModelProperty("菜单状态（0正常 1停用）")
         private String status;
-        @ApiModelProperty("权限标识")
-        private String perms;
-        @ApiModelProperty("菜单图标")
-        private String icon;
-        @ApiModelProperty("创建时间")
-        private Date createTime;
-        @ApiModelProperty("更新时间")
-        private Date updateTime;
-        @ApiModelProperty("租户")
-        private String tenantId;
-        @ApiModelProperty("备注")
-        private String remark;
-        @ApiModelProperty("创建者")
-        private String createUser;
-        @ApiModelProperty("更新者")
-        private String updateUser;
-        @ApiModelProperty("删除标识")
-        private String delFlag;
+
+
 
 
 }

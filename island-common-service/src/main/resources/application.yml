@@ -1,22 +1,51 @@
-server:
-  port: 8001
-  servlet:
-    context-path: /island/common
-
 spring:
   application:
-    name: island-common-service
-  profiles:
-    active: dev
-  main:
-    banner-mode: 'OFF'
-  jackson:
-    serialization:
-      indent-output: true
-  swagger:
-    basePackage: com.lkyl.island.common.service.controller
-  mvc:
-    pathmatch:
-      matching-strategy: ANT_PATH_MATCHER
+    name: island-common
+  config:
+    activate:
+      on-profile:
+        - dev
+        - sit
+server:
+  port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+      #spring.config.activate.on-profile
 
 
+jwt:
+  private.key: classpath:app.key
+  public.key: classpath:app.pub
+
+feign:
+  client:
+    config:
+      # 全局级别配置
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+        # 只打印基本信息，包括请求方法、请求地址、响应状态码、请求时长
+        loggerLevel: basic
+ribbon:
+  #指的是建立连接后从服务器读取到可用资源所用的时间
+  ReadTimeout: 5000
+  #指的是建立连接所用的时间，适用于网络状况正常的情况下,两端连接所用的时间
+  ConnectTimeout: 5000
+
+ocean:
+  security:
+    oauth2:
+      token:
+        expireMinute: 30
+      permittedUrls:
+        - /login
+        - /health
+        - /logout
+        - /verify/code
+        - /csrf
+      corsAllowedMethods:
+        - GET
+        - POST

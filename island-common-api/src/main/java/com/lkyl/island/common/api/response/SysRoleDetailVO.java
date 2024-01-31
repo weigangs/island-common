@@ -1,0 +1,58 @@
+package com.lkyl.island.common.api.response;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.ToString;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * 角色信息表(SysRole)响应实体VO
+ *
+ * @author author
+ * @since 2022-06-04 20:29:56
+ */
+@Data
+@ApiModel("角色信息表响应体")
+@ToString
+public class SysRoleDetailVO implements Serializable {
+    private static final long serialVersionUID = -36628282553789285L;
+         @ApiModelProperty("角色ID")
+         @JsonSerialize(using = ToStringSerializer.class)
+         private Long roleId;
+         @ApiModelProperty("角色名称")
+         private String roleName;
+         @ApiModelProperty("角色权限字符串")
+         private String roleKey;
+         @ApiModelProperty("显示顺序")
+         private Integer roleSort;
+         @ApiModelProperty("数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）")
+         private String dataScope;
+         @ApiModelProperty("菜单树选择项是否关联显示")
+         private Integer menuCheckStrictly;
+         @ApiModelProperty("部门树选择项是否关联显示")
+         private Integer deptCheckStrictly;
+         @ApiModelProperty("角色状态（1正常 0停用）")
+         private String status;
+         @ApiModelProperty("删除标识")
+         private String delFlag;
+         @ApiModelProperty("创建时间")
+         private Date createTime;
+         @ApiModelProperty("更新时间")
+         private Date updateTime;
+         @ApiModelProperty("租户")
+         private String tenantId;
+         @ApiModelProperty("备注")
+         private String remark;
+         @ApiModelProperty("创建者")
+         private String createUser;
+         @ApiModelProperty("更新者")
+         private String updateUser;
+
+
+}
+

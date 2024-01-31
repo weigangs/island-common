@@ -1,6 +1,9 @@
 package com.lkyl.island.common.api.response;
 
 import java.io.Serializable;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import lombok.ToString;
 import java.util.Date;
@@ -19,6 +22,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class SysRoleMenuVO implements Serializable {
     private static final long serialVersionUID = 410185919420841751L;
          @ApiModelProperty("角色ID")
+     @JsonSerialize(using = ToStringSerializer.class)
          private Long roleId;
          @ApiModelProperty("菜单ID")
          private Long menuId;
